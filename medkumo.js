@@ -1,3 +1,3 @@
 /*
-* Contain logic function 
+* Contain logic function
 */
