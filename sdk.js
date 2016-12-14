@@ -13,7 +13,7 @@
     Medkumo.book = function(hospitalKey, doctorKey) {
         console.log('executing book...');
         var session= new Date();
-        PopupCenter('bookAnAppointment.html?hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey + '&session=' + session, "Book An Appointment", 650, 500);
+        PopupCenter('index.html?hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey + '&session=' + session, "Book An Appointment", 650, 500);
     };
 
     function PopupCenter(url, title, w, h) {
