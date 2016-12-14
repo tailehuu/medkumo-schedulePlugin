@@ -3,9 +3,10 @@
  *
  */
 (function(window, undefined) {
-    var Config = {}, params={};
+    var Config = {},
+        params = {};
 
-    params=getUrlParameters();
+    params = getUrlParameters();
     loadConfig(params["hospitalKey"], params["doctorKey"]);
     checkHospitalKey();
 
@@ -222,12 +223,12 @@
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
             sURLVariables = sPageURL.split('&'),
             sParameterName,
-            i,resObject={};
+            i, resObject = {};
 
 
         for (i = 0; i < sURLVariables.length; i++) {
             sParameterName = sURLVariables[i].split('=');
-            resObject[sParameterName[0]]=sParameterName[1] === undefined ? true : sParameterName[1];
+            resObject[sParameterName[0]] = sParameterName[1] === undefined ? true : sParameterName[1];
         }
         return resObject;
     }
