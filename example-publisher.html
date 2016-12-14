@@ -2,15 +2,19 @@
 
 <head>
 	<title>Publisher</title>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-	<script src='//sdk.medkumo.com/medkumo.js'></script>
+	<script src='sdk.js'></script>
 
-	The web content here...
-	<button onclick="Medkumo.book('your hospital key', 'your doctor key')">Book An Appointment</button>
+	<h1>Publisher Website</h1>
+
+	<h5>Valid booking button</h5>
+	<button onclick="Medkumo.book('8cfc7a0b788a513756f58fae3f3d1612c8cd381b','142a3713c6a14e61466aa6a8d4621c66abbc6a7a')">Booking</button>
+
+	<h5>Invalid booking button - Wrong hospital key & doctor key</h5>
+	<button onclick="Medkumo.book('1acc07aebddca030a842751c6126dbf219d474fb','142a3713c6a14e61466aa6a8d4621c66abbc6a7a')">Booking</button>
 </body>
 
 </html>
