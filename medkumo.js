@@ -3,10 +3,11 @@
  *
  */
 (function(window, undefined) {
-    var Config = {};
-    loadConfig(getUrlParameter("hospitalKey"), getUrlParameter("doctorKey"));
-    checkHospitalKey();
+    var Config = {}, params={};
 
+    params=getUrlParameters();
+    loadConfig(params["hospitalKey"], params["doctorKey"]);
+    checkHospitalKey();
 
     // functions
     function checkHospitalKey() {
@@ -217,19 +218,18 @@
         return result;
     }
 
-    function getUrlParameter(sParam) {
+    function getUrlParameters() {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
             sURLVariables = sPageURL.split('&'),
             sParameterName,
-            i;
+            i,resObject={};
+
 
         for (i = 0; i < sURLVariables.length; i++) {
             sParameterName = sURLVariables[i].split('=');
-
-            if (sParameterName[0] === sParam) {
-                return sParameterName[1] === undefined ? true : sParameterName[1];
-            }
+            resObject[sParameterName[0]]=sParameterName[1] === undefined ? true : sParameterName[1];
         }
+        return resObject;
     }
 
     function loadConfig(hospitalKey, doctorKey) {
