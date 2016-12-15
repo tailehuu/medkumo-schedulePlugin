@@ -14,10 +14,10 @@
         console.log('executing book...');
         var date = new Date();
         var session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
-        PopupCenter('index.html?hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey + '&session=' + session, "Book An Appointment", 650, 600);
+        openPopup('index.html?hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey + '&session=' + session, "Book An Appointment", 650, 600);
     };
 
-    function PopupCenter(url, title, w, h) {
+    function openPopup(url, title, w, h) {
         // Fixes dual-screen position                         Most browsers      Firefox
         var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
         var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;

@@ -4,79 +4,27 @@
  */
 (function(window, undefined) {
     var Config = {},
-        params = {};
-    params = getUrlParameters();
-    var date = new Date();
-    var session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
+        params = getUrlParameters(),
+        date = new Date(),
+        session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
     if (params['session'] != session) {
         alert("Timeout expired !");
         return;
     }
     loadConfig(params["hospitalKey"], params["doctorKey"]);
-    checkHospitalKey(bookAnAppointmentEvents);
+    book();
 
     // functions
-    function checkHospitalKey(callback) {
-        console.log('executing checkHospitalKey...');
-
-        var jsonData = {
-            "hospital_key": Config.hospitalKey,
-            "doctor_key": Config.doctorKey
-        };
-        $.ajax({
-            type: 'POST',
-            url: Config.apiCheckHospitalAndDoctorDetails,
-            data: JSON.stringify(jsonData),
-            contentType: "application/x-www-form-urlencoded",
-            dataType: 'json',
-            success: function(data) {
-                console.log('success: ', data);
-                if (data.code === '1') {
-                    callback();
-                } else {
-                    renderMessage.error(data.message, '.medkumo-sdk-message');
-                }
-            },
-            error: function(data) {
-                console.log('error: ', data);
-                renderMessage.error(data, '.medkumo-sdk-message');
-            }
-        });
+    function book() {
+        checkHospitalAndDoctorDetails(renderBookAnAppointment);
     }
 
-    function getAvailableTiming(dateSelect, callback) {
-        var jsonData = {
-            "appointment_date": dateSelect,
-            "doctor_key": Config.doctorKey,
-            "hospital_key": Config.hospitalKey
-        };
-        $.ajax({
-            type: 'POST',
-            url: Config.apiDoctorAvailableTiming,
-            data: JSON.stringify(jsonData),
-            contentType: "application/x-www-form-urlencoded",
-            dataType: 'json',
-            success: function(data) {
-                if (data && data.code === "1") {
-                    callback(data.data.available_time);
-                    console.log(data.data.available_time);
-                } else {
-                    console.log('error: ', data);
-                    renderMessage.error("Can't get available timing of the doctor !", '.medkumo-sdk-message');
-                }
-            },
-            error: function(data) {
-                console.log('error: ', data);
-                renderMessage.error("Can't get available timing of the doctor !", '.medkumo-sdk-message');
-            }
-        });
-    }
+    function renderBookAnAppointment() {
+        console.log('executing renderBookAnAppointment...');
+        //TODO
 
-    function renderOptionTiming(available_times) {
-        $('#medkumo-sdk-timing').html("");
-        available_times.map(function(ele, index) {
-            $('#medkumo-sdk-timing').append('<option value="' + ele + '">' + ele + '</option>');
-        });
+        // events
+        bookAnAppointmentEvents();
     }
 
     function bookAnAppointmentEvents() {
@@ -121,7 +69,6 @@
                 dob = dobValue.getDate() + "/" + (dobValue.getMonth() + 1) + "/" + dobValue.getFullYear();
             }
 
-
             var jsonData = {
                 "hospital_key": Config.hospitalKey,
                 "doctor_key": Config.doctorKey,
@@ -157,7 +104,69 @@
                 }
             });
         });
+    }
 
+    function checkHospitalAndDoctorDetails(callback) {
+        console.log('executing checkHospitalAndDoctorDetails...');
+
+        var jsonData = {
+            "hospital_key": Config.hospitalKey,
+            "doctor_key": Config.doctorKey
+        };
+        $.ajax({
+            type: 'POST',
+            url: Config.apiCheckHospitalAndDoctorDetails,
+            data: JSON.stringify(jsonData),
+            contentType: "application/x-www-form-urlencoded",
+            dataType: 'json',
+            success: function(data) {
+                console.log('success: ', data);
+                if (data.code === '1') {
+                    callback();
+                } else {
+                    renderMessage.error(data.message, '.medkumo-sdk-message');
+                }
+            },
+            error: function(data) {
+                console.log('error: ', data);
+                renderMessage.error(data, '.medkumo-sdk-message');
+            }
+        });
+    }
+
+    function getAvailableTiming(dateSelect, callback) {
+        var jsonData = {
+            "appointment_date": dateSelect,
+            "doctor_key": Config.doctorKey,
+            "hospital_key": Config.hospitalKey
+        };
+        $.ajax({
+            type: 'POST',
+            url: Config.apiDoctorAvailableTiming,
+            data: JSON.stringify(jsonData),
+            contentType: "application/x-www-form-urlencoded",
+            dataType: 'json',
+            success: function(data) {
+                if (data && data.code === "1") {
+                    callback(data.data.available_time);
+                } else {
+                    console.log('error: ', data);
+                    renderMessage.error("Can't get available timing of the doctor !", '.medkumo-sdk-message');
+                }
+            },
+            error: function(data) {
+                console.log('error: ', data);
+                renderMessage.error("Can't get available timing of the doctor !", '.medkumo-sdk-message');
+            }
+        });
+    }
+
+    function renderOptionTiming(available_times) {
+        var htmlOptions = '';
+        available_times.map(function(ele, index) {
+            htmlOptions += '<option value="' + ele + '">' + ele + '</option>';
+        });
+        $('#medkumo-sdk-timing').html(htmlOptions);
     }
 
     var renderMessage = {
