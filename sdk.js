@@ -12,8 +12,9 @@
 
     Medkumo.book = function(hospitalKey, doctorKey) {
         console.log('executing book...');
-        var session= new Date();
-        PopupCenter('index.html?hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey + '&session=' + session, "Book An Appointment", 650, 500);
+        var date = new Date();
+        var session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
+        PopupCenter('index.html?hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey + '&session=' + session, "Book An Appointment", 650, 600);
     };
 
     function PopupCenter(url, title, w, h) {

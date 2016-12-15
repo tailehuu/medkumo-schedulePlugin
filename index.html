@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book an appoinment form</title>
     <link href="css/medkumo.css" rel="stylesheet" />
-    <link href="css/medkumo.datetimepicker.css" rel="stylesheet" />
+    <link href="css/jquery-ui.css" rel="stylesheet" />
     <script src="lib/jquery-medkumo.js" type="text/javascript"></script>
-    <script src="lib/medkumo.datetimepicker.full.js" type="text/javascript"></script>
+    <script src="lib/jquery-ui.js" type="text/javascript"></script>
     <script src="medkumo.js" type="text/javascript"></script>
 </head>
 
@@ -49,12 +49,33 @@
                             <input name="patientMail" class="medkumo-sdk-form-row-email-input" type="email" placeholder="Email">
                     </label>
                 </div>
+                <div class="medkumo-sdk-form-row">
+                    <label>
+                            <span>Date of birth</span>
+                            <input name="dob" type="text"  class="medkumo_datepicker" placeholder="Date of birth">
+                    </label>
+                </div>
 
                 <div class="medkumo-sdk-form-row">
                     <label>
-                            <span>Appointment Date & Time</span>
-                            <input name="appointmentDateAndTime" class="medkumo_datetime_picker" type="text" placeholder="Datetime">
+                            <span>Date & Time</span>
+                            <input name="appointmentDate" type="text" placeholder="Datetime">
                     </label>
+                    <label>
+                        <select id="medkumo-sdk-timing">
+
+                        </select>
+                    </label>
+                </div>
+
+                <div class="medkumo-sdk-form-row">
+                    <label>
+                        <span>Gender</span>
+                    </label>
+                    <span>
+                    <div style="display: inline-block;">Male<input type="radio" name="gender" value="1" checked="checked"></div>
+                    <div style="display: inline-block;">Female<input type="radio" name="gender" value="0"></div>
+                  </span>
                 </div>
 
                 <div class="medkumo-sdk-form-row footer-group-button">
@@ -63,6 +84,7 @@
                     </label>
                     <button id="medkumo-sdk-form-row-book-button">Book</button>
                 </div>
+
 
             </div>
         </div>
