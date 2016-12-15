@@ -28,16 +28,17 @@
     }
 
     function bookAnAppointmentEvents() {
+        var currentDate = new Date().toISOString(),
+            date, dateSelect, jsonData;
         $(".medkumo_datepicker").datepicker({
             dateFormat: 'd-m-yy'
         });
-        var currentDate = new Date().toISOString();
         getAvailableTiming(currentDate, renderOptionTiming);
         $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').datepicker({
             dateFormat: 'd-m-yy',
             onSelect: function(data) {
-                var date = $(this).datepicker('getDate');
-                var dateSelect = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+                date = $(this).datepicker('getDate');
+                dateSelect = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
                 getAvailableTiming(dateSelect, renderOptionTiming);
             }
         }).datepicker('setDate', new Date());
@@ -69,7 +70,7 @@
                 dob = dobValue.getDate() + "/" + (dobValue.getMonth() + 1) + "/" + dobValue.getFullYear();
             }
 
-            var jsonData = {
+            jsonData = {
                 "hospital_key": Config.hospitalKey,
                 "doctor_key": Config.doctorKey,
                 "appointment_date": appointmentDate,
@@ -194,8 +195,8 @@
     };
 
     function validateBookAnAppointment() {
-        var result = true;
-        var patientName = $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').val(),
+        var result = true,
+            patientName = $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').val(),
             patientAge = $('#medkumo-sdk-book-an-appointment-form input[name="patientAge"]').val(),
             patientMobile = $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').val(),
             patientMail = $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').val(),
@@ -267,7 +268,6 @@
             apiCheckHospitalAndDoctorDetails = apiBaseUrl + '/checkHospitalAndDoctorDetails',
             apiBookAnAppointment = apiBaseUrl + '/bookAppointment',
             apiDoctorAvailableTiming = apiBaseUrl + '/doctorAvailableTiming';
-
 
         Config = {
             sdkBaseUrl: sdkBaseUrl,
