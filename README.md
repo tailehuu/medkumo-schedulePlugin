@@ -6,7 +6,7 @@ Using this a SDK to book an appointment in Medkumo website.
 You should insert this snippet at the beginning of <body> tag.
 ```html
 <body>
-    <script src="//sdk.medkumo.com/medkumo.js"></script>
+    <script src="//sdk.medkumo.com/sdk.js"></script>
     ...
 </body>
 ```
