@@ -57,7 +57,7 @@
     border-radius: 20px;
     border: 0;
     color: #ffffff;
-    padding: 9px 22px;
+    padding: 10px;
 }
 
 #medkumo-sdk-container .medkumo-sdk-body .medkumo-sdk-book-an-appointment .medkumo-sdk-form-row {
@@ -189,8 +189,7 @@ input[type='radio']:hover {
     box-shadow: 0 0 5px 0px orange inset;
 }
 
-
 input[type='radio']:checked {
-        box-shadow: 0 0 0px 2px #f1efec inset;
+    box-shadow: 0 0 0px 2px #f1efec inset;
     background: #058ef7!important;
 }

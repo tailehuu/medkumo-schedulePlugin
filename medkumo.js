@@ -19,23 +19,81 @@
         checkHospitalAndDoctorDetails(renderBookAnAppointment);
     }
 
-    function renderBookAnAppointment() {
+    function renderBookAnAppointment(doctor) {
         console.log('executing renderBookAnAppointment...');
         //TODO
-
+        var strForm = '';
+        strForm += '<div class="medkumo-sdk-message"></div>';
+        strForm += '<div id="medkumo-sdk-book-an-appointment-form" class="medkumo-sdk-book-an-appointment">';
+        strForm += '<div class="medkumo-sdk-form-row medkumo-sdk-item-center">';
+        strForm += '<img src="' + doctor.doctor_image + '" />';
+        strForm += '<h4 class="">' + doctor.doctor_name + '</h4>';
+        strForm += '</div>';
+        strForm += '<div class="medkumo-sdk-form-row">';
+        strForm += '<label>';
+        strForm += '<span>Name</span>';
+        strForm += '<input name="patientName" type="text" placeholder="Patient Name">';
+        strForm += '</label>';
+        strForm += '</div>';
+        strForm += '<div class="medkumo-sdk-form-row">';
+        strForm += '<label>';
+        strForm += '<span>Age</span>';
+        strForm += '<input name="patientAge" class="medkumo-sdk-form-row-age-input" type="text" placeholder="Patient Age">';
+        strForm += '</label>';
+        strForm += '</div>';
+        strForm += '<div class="medkumo-sdk-form-row">'
+        strForm += '<label>';
+        strForm += '<span>Mobile</span>';
+        strForm += '<input name="patientMobile" type="text" placeholder="Mobile">';
+        strForm += '</label>';
+        strForm += '</div>';
+        strForm += '<div class="medkumo-sdk-form-row">';
+        strForm += '<label>';
+        strForm += '<span>Email</span>';
+        strForm += '<input name="patientMail" class="medkumo-sdk-form-row-email-input" type="email" placeholder="Email">';
+        strForm += '</label>';
+        strForm += '</div>';
+        strForm += '<div class="medkumo-sdk-form-row">';
+        strForm += '<label>';
+        strForm += '<span>Date of birth</span>';
+        strForm += '<input name="dob" type="text"  class="medkumo_datepicker" placeholder="Date of birth">';
+        strForm += '</label>';
+        strForm += '</div>';
+        strForm += '<div class="medkumo-sdk-form-row">';
+        strForm += '<label>';
+        strForm += '<span>Appointment Date & Time</span>';
+        strForm += '<input id="appointmentDate" name="appointmentDate" type="text" placeholder="Appointment date">';
+        strForm += '<select id="medkumo-sdk-timing" placeholder="Appointment time"></select>';
+        strForm += '</label>';
+        strForm += '</div>';
+        strForm += '<div class="medkumo-sdk-form-row">';
+        strForm += '<label>';
+        strForm += '<span>Gender</span>';
+        strForm += '</label>';
+        strForm += '<div style="display: inline-block;">Male<input type="radio" name="gender" value="1" checked="checked"></div>';
+        strForm += '<div style="display: inline-block;">Female<input type="radio" name="gender" value="0"></div>';
+        strForm += '</div>';
+        strForm += '<div class="medkumo-sdk-form-row footer-group-button">';
+        strForm += '<label>';
+        strForm += '<span>&nbsp;</span>';
+        strForm += '</label>';
+        strForm += '<button id="medkumo-sdk-form-row-book-button">Book</button>';
+        strForm += '</div>';
+        strForm += '</div>';
+        $("#medkumo-sdk-container .medkumo-sdk-body").html(strForm);
         // events
-        bookAnAppointmentEvents();
+        bookAnAppointmentEvents(doctor);
     }
 
     function bookAnAppointmentEvents() {
         var currentDate = new Date().toISOString(),
             date, dateSelect, jsonData;
         $(".medkumo_datepicker").datepicker({
-            dateFormat: 'd-m-yy'
+            dateFormat: 'd/m/yy'
         });
         getAvailableTiming(currentDate, renderOptionTiming);
         $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').datepicker({
-            dateFormat: 'd-m-yy',
+            dateFormat: 'd/m/yy',
             onSelect: function(data) {
                 date = $(this).datepicker('getDate');
                 dateSelect = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
@@ -123,7 +181,7 @@
             success: function(data) {
                 console.log('success: ', data);
                 if (data.code === '1') {
-                    callback();
+                    callback(data.data);
                 } else {
                     renderMessage.error(data.message, '.medkumo-sdk-message');
                 }
