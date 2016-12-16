@@ -1,33 +1,38 @@
 /*
- * Medkumo Javascript SDK
+ * Medkumo Javascript SDK functions
  *
  */
 (function(window, undefined) {
-    var Config = {},
-        params = getUrlParameters(),
-        date = new Date(),
-        session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
-    if (params['session'] != session) {
-        alert("Timeout expired !");
-        return;
-    }
-    loadConfig(params["hospitalKey"], params["doctorKey"]);
+
+    init();
     book();
 
     // functions
+    function init() {
+        var Config = {},
+            params = getUrlParameters(),
+            date = new Date(),
+            session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
+        if (params['session'] != session) {
+            alert("Timeout expired !");
+            return;
+        }
+        loadConfig(params["hospitalKey"], params["doctorKey"]);
+    }
+
     function book() {
         checkHospitalAndDoctorDetails(renderBookAnAppointment);
     }
 
-    function renderBookAnAppointment(doctor) {
+    function renderBookAnAppointment() {
         console.log('executing renderBookAnAppointment...');
-        //TODO
+
         var strForm = '';
         strForm += '<div class="medkumo-sdk-message"></div>';
         strForm += '<div id="medkumo-sdk-book-an-appointment-form" class="medkumo-sdk-book-an-appointment">';
         strForm += '<div class="medkumo-sdk-form-row medkumo-sdk-item-center">';
-        strForm += '<img src="' + doctor.doctor_image + '" />';
-        strForm += '<h4 class="">' + doctor.doctor_name + '</h4>';
+        strForm += '<img src="' + Config.doctor.doctor_image + '" />';
+        strForm += '<h4 class="">' + Config.doctor.doctor_name + '</h4>';
         strForm += '</div>';
         strForm += '<div class="medkumo-sdk-form-row">';
         strForm += '<label>';
@@ -82,24 +87,25 @@
         strForm += '</div>';
         $("#medkumo-sdk-container .medkumo-sdk-body").html(strForm);
         // events
-        bookAnAppointmentEvents(doctor);
+        bookAnAppointmentEvents();
     }
 
     function bookAnAppointmentEvents() {
-        var currentDate = new Date().toISOString(),
+        var currentDate = new Date(),
             date, dateSelect, jsonData;
         $(".medkumo_datepicker").datepicker({
             dateFormat: 'd/m/yy'
         });
-        getAvailableTiming(currentDate, renderOptionTiming);
+        getAvailableTiming(currentDate.toISOString(), renderOptionTiming);
         $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').datepicker({
             dateFormat: 'd/m/yy',
+            minDate: currentDate,
             onSelect: function(data) {
                 date = $(this).datepicker('getDate');
                 dateSelect = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
                 getAvailableTiming(dateSelect, renderOptionTiming);
             }
-        }).datepicker('setDate', new Date());
+        }).datepicker('setDate', currentDate);
 
         // Booking submit event
         $(document).on("click", "#medkumo-sdk-form-row-book-button", function() {
@@ -181,7 +187,8 @@
             success: function(data) {
                 console.log('success: ', data);
                 if (data.code === '1') {
-                    callback(data.data);
+                    Config.doctor = data.data;
+                    callback();
                 } else {
                     renderMessage.error(data.message, '.medkumo-sdk-message');
                 }
@@ -307,6 +314,10 @@
         return result;
     }
 
+    function getDoctorAddress() {
+        return Config.doctor.hospital_city + ", " + Config.doctor.state + ", " + Config.doctor.country
+    }
+
     function getUrlParameters() {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
             sURLVariables = sPageURL.split('&'),
@@ -334,7 +345,8 @@
             apiBookAnAppointment: apiBookAnAppointment,
             apiDoctorAvailableTiming: apiDoctorAvailableTiming,
             hospitalKey: hospitalKey,
-            doctorKey: doctorKey
+            doctorKey: doctorKey,
+            doctor: {}
         };
     }
 
