@@ -3,21 +3,22 @@
  *
  */
 (function(window, undefined) {
-
+    var Config = {};
     init();
     book();
 
     // functions
     function init() {
-        var Config = {},
-            params = getUrlParameters(),
+        var params = getUrlParameters(),
             date = new Date(),
-            session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
+            session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear(),
+            hospitalKey = params["hospitalKey"],
+            doctorKey = params["doctorKey"];
         if (params['session'] != session) {
             alert("Timeout expired !");
             return;
         }
-        loadConfig(params["hospitalKey"], params["doctorKey"]);
+        loadConfig(hospitalKey, doctorKey);
     }
 
     function book() {
@@ -105,7 +106,9 @@
 
     function bookAnAppointmentEvents(callback) {
         var currentDate = new Date(),
-            date, dateSelect, jsonData;
+            date,
+            dateSelect,
+            jsonData;
         $(".medkumo_datepicker").datepicker({
             dateFormat: 'd/m/yy'
         });
@@ -152,7 +155,7 @@
                 "appointment_time": appointmentTime,
                 "patient_id": "",
                 "name": patientName,
-                "age": 20,
+                "age": 0,
                 "gender": gender,
                 "dob": dob,
                 "mobile_number": patientMobile,
@@ -354,11 +357,11 @@
         var addresses = [];
         if (Config.doctor.hospital_address != "") {
             addresses.push(Config.doctor.hospital_address);
-        }        
+        }
         if (Config.doctor.hospital_area != "") {
             addresses.push(Config.doctor.hospital_area);
         }
-        if ( Config.doctor.hospital_city != "") {
+        if (Config.doctor.hospital_city != "") {
             addresses.push(Config.doctor.hospital_city);
         }
         return addresses.join(", ");
