@@ -3,21 +3,22 @@
  *
  */
 (function(window, undefined) {
-
+    var Config = {};
     init();
     book();
 
     // functions
     function init() {
-        var Config = {},
-            params = getUrlParameters(),
+        var params = getUrlParameters(),
             date = new Date(),
-            session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
+            session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear(),
+            hospitalKey = params["hospitalKey"],
+            doctorKey = params["doctorKey"];
         if (params['session'] != session) {
             alert("Timeout expired !");
             return;
         }
-        loadConfig(params["hospitalKey"], params["doctorKey"]);
+        loadConfig(hospitalKey, doctorKey);
     }
 
     function book() {
@@ -28,71 +29,86 @@
         console.log('executing renderBookAnAppointment...');
 
         var strForm = '';
-        strForm += '<div class="medkumo-sdk-message"></div>';
-        strForm += '<div id="medkumo-sdk-book-an-appointment-form" class="medkumo-sdk-book-an-appointment">';
-        strForm += '<div class="medkumo-sdk-form-row medkumo-sdk-item-center">';
-        strForm += '<img src="' + Config.doctor.doctor_image + '" />';
-        strForm += '<h4 class="">' + Config.doctor.doctor_name + '</h4>';
+        strForm += '<div class="row">';
+        strForm += '  <div class="col-xs-12 col-sm-12 col-md-12 bg-primary">';
+        strForm += '    <div class="doctor-info">';
+        strForm += '      <div class="media">';
+        strForm += '        <div class="media-left media-middle">';
+        strForm += '          <a href="#" class="doctor-avatar-container">';
+        strForm += '            <img src="' + Config.doctor.doctor_image + '" class="doctor-avatar" alt="Cinque Terre" width="50">';
+        strForm += '          </a>';
+        strForm += '        </div>';
+        strForm += '        <div class="media-body">';
+        strForm += '          <p class="media-heading"><span class="heading_doctor_name">' + Config.doctor.doctor_name + ',</span> <span>' + Config.doctor.doctor_qualifications + '</span></p>';
+        strForm += '          <p>' + Config.doctor.hospital_name + '</p>';
+        strForm += '          <p>' + getDoctorAddress() + '</p>';
+        strForm += '        </div>';
+        strForm += '      </div>';
+        strForm += '    </div>';
+        strForm += '  </div>';
         strForm += '</div>';
-        strForm += '<div class="medkumo-sdk-form-row">';
-        strForm += '<label>';
-        strForm += '<span>Name</span>';
-        strForm += '<input name="patientName" type="text" placeholder="Patient Name">';
-        strForm += '</label>';
+        strForm += '<div class="row padding-top-15">';
+        strForm += '  <div class="col-xs-12 col-sm-12 col-md-12">';
+        strForm += '    <div id="medkumo-sdk-book-an-appointment-form" class="form-container">';
+        strForm += '      <div class="form-group has-feedback">';
+        strForm += '        <label class="control-label">Name<span class="text-danger">*</span></label>';
+        strForm += '        <input name="patientName" type="text" class="form-control" id="name" placeholder="First name Last name">';
+        strForm += '        <span class="glyphicon glyphicon-user form-control-feedback" aria-hidden="true"></span>';
+        strForm += '      </div>';
+        strForm += '      <div class="form-group  has-feedback">';
+        strForm += '        <label class="control-label">Email</label>';
+        strForm += '        <input name="patientMail" type="email" class="form-control" id="mail" placeholder="youremail@domain.com">';
+        strForm += '        <span class="glyphicon glyphicon-envelope form-control-feedback" aria-hidden="true"></span>';
+        strForm += '      </div>';
+        strForm += '      <div class="form-group has-feedback">';
+        strForm += '        <label class="control-label" for="mobile">Mobile Number <span class="text-danger">*</span></label>';
+        strForm += '        <div class="input-group">';
+        strForm += '          <span class="input-group-addon">+91</span>';
+        strForm += '          <input name="patientMobile" type="text" class="form-control" id="mobile" placeholder="1234567890">';
+        strForm += '        </div>';
+        strForm += '        <span class="glyphicon glyphicon-earphone form-control-feedback" aria-hidden="true"></span>';
+        strForm += '      </div>';
+        strForm += '      <div class="form-group has-feedback">';
+        strForm += '        <label class="control-label" for="birthDay">Date of Birth<span class="text-danger">*</span></label>';
+        strForm += '        <input name="dob" type="text" class="form-control medkumo_datepicker" id="birthDay" placeholder="dd/mm/YYYY">';
+        strForm += '        <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>';
+        strForm += '      </div>';
+        strForm += '      <div class="form-group">';
+        strForm += '      <div class="row">';
+        strForm += '        <div class="col-xs-6">';
+        strForm += '          <label class="control-label" for="appointmentDate">Appointment Date<span class="text-danger">*</span></label>';
+        strForm += '          <input name="appointmentDate" type="text" class="form-control" id="appointmentDate" placeholder="dd/mm/YYYY">';
+        strForm += '        </div>';
+        strForm += '        <div class="col-xs-6">';
+        strForm += '          <label class="control-label" for="appointmentTime">Appointment Time<span class="text-danger">*</span></label>';
+        strForm += '          <select id="appointmentTime" class="form-control"></select>';
+        strForm += '        </div>';
+        strForm += '      </div>';
+        strForm += '    </div>';
+        strForm += '    <div class="text-center ">';
+        strForm += '      <div class="radio-inline ">';
+        strForm += '        <input type="radio" name="gender" id="radioMale" value="1" checked>';
+        strForm += '        <label>Male</label>';
+        strForm += '      </div>';
+        strForm += '      <div class="radio-inline ">';
+        strForm += '        <input type="radio" name="gender" id="radioFemale" value="0">';
+        strForm += '        <label>Female</label>';
+        strForm += '      </div>';
+        strForm += '    </div>';
+        strForm += '    <div class="padding-top-10"><button id="medkumo-sdk-form-row-book-button" class="btn btn-warning center-block ">Book Appointment</button></div>';
+        strForm += '  </div>';
         strForm += '</div>';
-        strForm += '<div class="medkumo-sdk-form-row">';
-        strForm += '<label>';
-        strForm += '<span>Age</span>';
-        strForm += '<input name="patientAge" class="medkumo-sdk-form-row-age-input" type="text" placeholder="Patient Age">';
-        strForm += '</label>';
-        strForm += '</div>';
-        strForm += '<div class="medkumo-sdk-form-row">'
-        strForm += '<label>';
-        strForm += '<span>Mobile</span>';
-        strForm += '<input name="patientMobile" type="text" placeholder="Mobile">';
-        strForm += '</label>';
-        strForm += '</div>';
-        strForm += '<div class="medkumo-sdk-form-row">';
-        strForm += '<label>';
-        strForm += '<span>Email</span>';
-        strForm += '<input name="patientMail" class="medkumo-sdk-form-row-email-input" type="email" placeholder="Email">';
-        strForm += '</label>';
-        strForm += '</div>';
-        strForm += '<div class="medkumo-sdk-form-row">';
-        strForm += '<label>';
-        strForm += '<span>Date of birth</span>';
-        strForm += '<input name="dob" type="text"  class="medkumo_datepicker" placeholder="Date of birth">';
-        strForm += '</label>';
-        strForm += '</div>';
-        strForm += '<div class="medkumo-sdk-form-row">';
-        strForm += '<label>';
-        strForm += '<span>Appointment Date & Time</span>';
-        strForm += '<input id="appointmentDate" name="appointmentDate" type="text" placeholder="Appointment date">';
-        strForm += '<select id="medkumo-sdk-timing" placeholder="Appointment time"></select>';
-        strForm += '</label>';
-        strForm += '</div>';
-        strForm += '<div class="medkumo-sdk-form-row">';
-        strForm += '<label>';
-        strForm += '<span>Gender</span>';
-        strForm += '</label>';
-        strForm += '<div style="display: inline-block;">Male<input type="radio" name="gender" value="1" checked="checked"></div>';
-        strForm += '<div style="display: inline-block;">Female<input type="radio" name="gender" value="0"></div>';
-        strForm += '</div>';
-        strForm += '<div class="medkumo-sdk-form-row footer-group-button">';
-        strForm += '<label>';
-        strForm += '<span>&nbsp;</span>';
-        strForm += '</label>';
-        strForm += '<button id="medkumo-sdk-form-row-book-button">Book</button>';
-        strForm += '</div>';
-        strForm += '</div>';
-        $("#medkumo-sdk-container .medkumo-sdk-body").html(strForm);
+        $(".medkumo-sdk-body").html(strForm);
+
         // events
-        bookAnAppointmentEvents();
+        bookAnAppointmentEvents(renderConfirmationPage);
     }
 
-    function bookAnAppointmentEvents() {
+    function bookAnAppointmentEvents(callback) {
         var currentDate = new Date(),
-            date, dateSelect, jsonData;
+            date,
+            dateSelect,
+            jsonData;
         $(".medkumo_datepicker").datepicker({
             dateFormat: 'd/m/yy'
         });
@@ -110,7 +126,6 @@
         // Booking submit event
         $(document).on("click", "#medkumo-sdk-form-row-book-button", function() {
             var patientName = $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').val(),
-                patientAge = $('#medkumo-sdk-book-an-appointment-form input[name="patientAge"]').val(),
                 patientMobile = $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').val(),
                 patientMail = $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').val(),
                 dobValue = $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').datepicker('getDate'),
@@ -118,10 +133,9 @@
                 gender = $('#medkumo-sdk-book-an-appointment-form input[name="gender"]').val(),
                 appointmentDateValue = $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').datepicker('getDate'),
                 appointmentDate = "",
-                appointmentTime = $('#medkumo-sdk-book-an-appointment-form #medkumo-sdk-timing').val();
+                appointmentTime = $('#medkumo-sdk-book-an-appointment-form #appointmentTime').val();
 
             if (validateBookAnAppointment() === false) {
-                renderMessage.error('You must enter the valid data !', '.medkumo-sdk-message');
                 return;
             } else {
                 $('#medkumo-sdk-book-an-appointment-form input').removeClass('input-error');
@@ -141,7 +155,7 @@
                 "appointment_time": appointmentTime,
                 "patient_id": "",
                 "name": patientName,
-                "age": patientAge,
+                "age": 0,
                 "gender": gender,
                 "dob": dob,
                 "mobile_number": patientMobile,
@@ -157,18 +171,45 @@
                 success: function(data) {
                     console.log('success: ', data);
                     if (data && data.code === "1") {
-                        renderMessage.success(data.data, '.medkumo-sdk-message');
+                        // callback
+                        callback(data);
                     } else {
-                        renderMessage.error(data.data, '.medkumo-sdk-message');
+                        alert(data.message);
                     }
 
                 },
                 error: function(data) {
                     console.log('error: ', data);
-                    renderMessage.error(data, '.medkumo-sdk-message');
+                    alert(data, '.medkumo-sdk-message');
                 }
             });
         });
+    }
+
+    function renderConfirmationPage(data) {
+        var strForm = '';
+        strForm += '<div class="row">';
+        strForm += '  <div class="col-xs-12 col-sm-12 col-md-12 bg-primary">';
+        strForm += '    <div class="doctor-info">';
+        strForm += '      <div class="media">';
+        strForm += '        <div class="media-left media-middle">';
+        strForm += '          <a href="#" class="doctor-avatar-container">';
+        strForm += '            <img src="' + Config.doctor.doctor_image + '" class="doctor-avatar" alt="Cinque Terre" width="50">';
+        strForm += '          </a>';
+        strForm += '        </div>';
+        strForm += '        <div class="media-body">';
+        strForm += '          <p class="media-heading"><span class="heading_doctor_name">' + Config.doctor.doctor_name + ',</span> <span>' + Config.doctor.doctor_qualifications + '</span></p>';
+        strForm += '          <p>' + Config.doctor.hospital_name + '</p>';
+        strForm += '          <p>' + getDoctorAddress() + '</p>';
+        strForm += '        </div>';
+        strForm += '      </div>';
+        strForm += '    </div>';
+        strForm += '  </div>';
+        strForm += '</div>';
+        strForm += '<div id="confirmation-body" class="row padding-top-15">';
+        strForm += '  <div id="confirmation-msg">' + data.data + '</div>';
+        strForm += '</div>';
+        $(".medkumo-sdk-body").html(strForm);
     }
 
     function checkHospitalAndDoctorDetails(callback) {
@@ -190,12 +231,11 @@
                     Config.doctor = data.data;
                     callback();
                 } else {
-                    renderMessage.error(data.message, '.medkumo-sdk-message');
+                    renderMessage.error(data.message);
                 }
             },
             error: function(data) {
                 console.log('error: ', data);
-                renderMessage.error(data, '.medkumo-sdk-message');
             }
         });
     }
@@ -217,12 +257,12 @@
                     callback(data.data.available_time);
                 } else {
                     console.log('error: ', data);
-                    renderMessage.error("Can't get available timing of the doctor !", '.medkumo-sdk-message');
+                    alert("Can't get available timing of the doctor !");
                 }
             },
             error: function(data) {
                 console.log('error: ', data);
-                renderMessage.error("Can't get available timing of the doctor !", '.medkumo-sdk-message');
+                console.log("Can't get available timing of the doctor !");
             }
         });
     }
@@ -232,7 +272,7 @@
         available_times.map(function(ele, index) {
             htmlOptions += '<option value="' + ele + '">' + ele + '</option>';
         });
-        $('#medkumo-sdk-timing').html(htmlOptions);
+        $('#appointmentTime').html(htmlOptions);
     }
 
     var renderMessage = {
@@ -240,16 +280,16 @@
             if (typeof(element) == 'undefined') {
                 element = '.medkumo-sdk-body';
             }
-            $(element).removeClass('medkumo-sdk-success');
-            $(element).addClass('medkumo-sdk-error');
+            $(element).removeClass('alert alert-success');
+            $(element).addClass('alert alert-danger');
             $(element).html(data);
         },
         success: function(data, element) {
             if (typeof(element) == 'undefined') {
                 element = '.medkumo-sdk-body';
             }
-            $(element).removeClass('medkumo-sdk-error');
-            $(element).addClass('medkumo-sdk-success');
+            $(element).removeClass('alert alert-danger');
+            $(element).addClass('alert alert-success');
             $(element).html(data);
         }
     };
@@ -262,60 +302,69 @@
     function validateBookAnAppointment() {
         var result = true,
             patientName = $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').val(),
-            patientAge = $('#medkumo-sdk-book-an-appointment-form input[name="patientAge"]').val(),
             patientMobile = $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').val(),
             patientMail = $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').val(),
             dobValue = $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').datepicker('getDate'),
             gender = $('#medkumo-sdk-book-an-appointment-form input[name="gender"]').val(),
             appointmentDateValue = $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').datepicker('getDate'),
-            appointmentTime = $('#medkumo-sdk-book-an-appointment-form #medkumo-sdk-timing').val();
+            appointmentTime = $('#medkumo-sdk-book-an-appointment-form #appointmentTime').val();
         if (patientName == null || patientName == "") {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').addClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').parents('.form-group').addClass('has-error');
             result = false;
         } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').removeClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').parents('.form-group').removeClass('has-error');
         }
 
-        if (patientAge != parseInt(patientAge, 10) || patientAge < 18 || patientAge > 100) {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientAge"]').addClass("medkumo-input-error");
+        if (patientMobile == null || patientMobile == "" || (patientMobile != null && patientMobile.length > 10)) {
+            $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').parents('.form-group').addClass('has-error');
             result = false;
         } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientAge"]').removeClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').parents('.form-group').removeClass('has-error');
         }
 
-        if (!isValidEmailAddress(patientMail)) {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').addClass("medkumo-input-error");
+        if (patientMail != "" && !isValidEmailAddress(patientMail)) {
+            $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').parents('.form-group').addClass('has-error');
             result = false;
         } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').removeClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').parents('.form-group').removeClass('has-error');
         }
 
         if (dobValue == null || dobValue == "") {
-            $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').addClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').parents('.form-group').addClass('has-error');
             result = false;
         } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').removeClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').parents('.form-group').removeClass('has-error');
         }
 
         if (appointmentTime == null || appointmentTime == "") {
-            $('#medkumo-sdk-book-an-appointment-form #medkumo-sdk-timing').addClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form #appointmentTime').parents('.form-group').addClass('has-error');
             result = false;
         } else {
-            $('#medkumo-sdk-book-an-appointment-form #medkumo-sdk-timing').removeClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form #appointmentTime').parents('.form-group').removeClass('has-error');
         }
 
         if (appointmentDateValue == null || appointmentDateValue == "") {
-            $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').addClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').parents('.form-group').addClass('has-error');
             result = false;
         } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').removeClass("medkumo-input-error");
+            $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').parents('.form-group').removeClass('has-error');
         }
 
         return result;
     }
 
     function getDoctorAddress() {
-        return Config.doctor.hospital_city + ", " + Config.doctor.state + ", " + Config.doctor.country
+        var addresses = [];
+        if (Config.doctor.hospital_address != "") {
+            addresses.push(Config.doctor.hospital_address);
+        }
+        if (Config.doctor.hospital_area != "") {
+            addresses.push(Config.doctor.hospital_area);
+        }
+        if (Config.doctor.hospital_city != "") {
+            addresses.push(Config.doctor.hospital_city);
+        }
+        return addresses.join(", ");
     }
 
     function getUrlParameters() {
