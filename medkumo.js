@@ -1,20 +1,25 @@
 /*
- * Medkumo Javascript SDK
+ * Medkumo Javascript SDK functions
  *
  */
 (function(window, undefined) {
-    var Config = {},
-        params = getUrlParameters(),
-        date = new Date(),
-        session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
-    if (params['session'] != session) {
-        alert("Timeout expired !");
-        return;
-    }
-    loadConfig(params["hospitalKey"], params["doctorKey"]);
+
+    init();
     book();
 
     // functions
+    function init() {
+        var Config = {},
+            params = getUrlParameters(),
+            date = new Date(),
+            session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
+        if (params['session'] != session) {
+            alert("Timeout expired !");
+            return;
+        }
+        loadConfig(params["hospitalKey"], params["doctorKey"]);
+    }
+
     function book() {
         checkHospitalAndDoctorDetails(renderBookAnAppointment);
     }
@@ -309,14 +314,8 @@
         return result;
     }
 
-    function concatString(arrayKeys) {
-        var result = '';
-        if (arrayKeys && arrayKeys.length > 0) {
-            arrayKeys.map(function(item, index) {
-                result += ' ' + Config.doctor[item];
-            });
-        }
-        return result;
+    function getDoctorAddress() {
+        return Config.doctor.hospital_city + ", " + Config.doctor.state + ", " + Config.doctor.country
     }
 
     function getUrlParameters() {
