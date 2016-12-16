@@ -38,7 +38,7 @@
         strForm += '          </a>';
         strForm += '        </div>';
         strForm += '        <div class="media-body">';
-        strForm += '           <h4 class="media-heading">' + Config.doctor.doctor_name + ', ' + Config.doctor.doctor_qualifications + '</h4>';
+        strForm += '          <p class="media-heading"><span class="heading_doctor_name">' + Config.doctor.doctor_name + ',</span> <span>' + Config.doctor.doctor_qualifications + '</span></p>';
         strForm += '          <p>' + Config.doctor.hospital_name + '</p>';
         strForm += '          <p>' + getDoctorAddress() + '</p>';
         strForm += '        </div>';
@@ -51,32 +51,32 @@
         strForm += '    <div id="medkumo-sdk-book-an-appointment-form" class="form-container">';
         strForm += '      <div class="form-group has-feedback">';
         strForm += '        <label class="control-label">Name<span class="text-danger">*</span></label>';
-        strForm += '        <input name="patientName" type="text" class="form-control" id="name" placeholder="Patient name">';
+        strForm += '        <input name="patientName" type="text" class="form-control" id="name" placeholder="First name Last name">';
         strForm += '        <span class="glyphicon glyphicon-user form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
         strForm += '      <div class="form-group  has-feedback">';
         strForm += '        <label class="control-label">Email</label>';
-        strForm += '        <input name="patientMail" type="email" class="form-control" id="mail" placeholder="Email">';
+        strForm += '        <input name="patientMail" type="email" class="form-control" id="mail" placeholder="youremail@domain.com">';
         strForm += '        <span class="glyphicon glyphicon-envelope form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
         strForm += '      <div class="form-group has-feedback">';
         strForm += '        <label class="control-label" for="mobile">Mobile Number <span class="text-danger">*</span></label>';
         strForm += '        <div class="input-group">';
         strForm += '          <span class="input-group-addon">+91</span>';
-        strForm += '          <input name="patientMobile" type="text" class="form-control" id="mobile" placeholder="Mobile Number">';
+        strForm += '          <input name="patientMobile" type="text" class="form-control" id="mobile" placeholder="1234567890">';
         strForm += '        </div>';
         strForm += '        <span class="glyphicon glyphicon-earphone form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
         strForm += '      <div class="form-group has-feedback">';
         strForm += '        <label class="control-label" for="birthDay">Date of Birth<span class="text-danger">*</span></label>';
-        strForm += '        <input name="dob" type="text" class="form-control medkumo_datepicker" id="birthDay" placeholder="YYYY-MM-DD">';
+        strForm += '        <input name="dob" type="text" class="form-control medkumo_datepicker" id="birthDay" placeholder="dd/mm/YYYY">';
         strForm += '        <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
         strForm += '      <div class="form-group">';
         strForm += '      <div class="row">';
         strForm += '        <div class="col-xs-6">';
         strForm += '          <label class="control-label" for="appointmentDate">Appointment Date<span class="text-danger">*</span></label>';
-        strForm += '          <input name="appointmentDate" type="text" class="form-control" id="appointmentDate" placeholder="YYYY-MM-DD">';
+        strForm += '          <input name="appointmentDate" type="text" class="form-control" id="appointmentDate" placeholder="dd/mm/YYYY">';
         strForm += '        </div>';
         strForm += '        <div class="col-xs-6">';
         strForm += '          <label class="control-label" for="appointmentTime">Appointment Time<span class="text-danger">*</span></label>';
@@ -107,11 +107,11 @@
         var currentDate = new Date(),
             date, dateSelect, jsonData;
         $(".medkumo_datepicker").datepicker({
-            dateFormat: 'yy-m-d'
+            dateFormat: 'd/m/yy'
         });
         getAvailableTiming(currentDate.toISOString(), renderOptionTiming);
         $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').datepicker({
-            dateFormat: 'yy-m-d',
+            dateFormat: 'd/m/yy',
             minDate: currentDate,
             onSelect: function(data) {
                 date = $(this).datepicker('getDate');
@@ -195,7 +195,7 @@
         strForm += '          </a>';
         strForm += '        </div>';
         strForm += '        <div class="media-body">';
-        strForm += '           <h4 class="media-heading">' + Config.doctor.doctor_name + ', ' + Config.doctor.doctor_qualifications + '</h4>';
+        strForm += '          <p class="media-heading"><span class="heading_doctor_name">' + Config.doctor.doctor_name + ',</span> <span>' + Config.doctor.doctor_qualifications + '</span></p>';
         strForm += '          <p>' + Config.doctor.hospital_name + '</p>';
         strForm += '          <p>' + getDoctorAddress() + '</p>';
         strForm += '        </div>';
@@ -204,7 +204,7 @@
         strForm += '  </div>';
         strForm += '</div>';
         strForm += '<div id="confirmation-body" class="row padding-top-15">';
-        strForm += '  <div id="confirmation-msg">'+data.data+'</div>';
+        strForm += '  <div id="confirmation-msg">' + data.data + '</div>';
         strForm += '</div>';
         $(".medkumo-sdk-body").html(strForm);
     }
@@ -351,7 +351,17 @@
     }
 
     function getDoctorAddress() {
-        return Config.doctor.hospital_address + ", " + Config.doctor.hospital_area + ", " + Config.doctor.hospital_city
+        var addresses = [];
+        if (Config.doctor.hospital_address != "") {
+            addresses.push(Config.doctor.hospital_address);
+        }        
+        if (Config.doctor.hospital_area != "") {
+            addresses.push(Config.doctor.hospital_area);
+        }
+        if ( Config.doctor.hospital_city != "") {
+            addresses.push(Config.doctor.hospital_city);
+        }
+        return addresses.join(", ");
     }
 
     function getUrlParameters() {

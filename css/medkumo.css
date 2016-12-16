@@ -40,3 +40,7 @@ body {
 #confirmation-msg {
     text-align: center;
 }
+.heading_doctor_name{
+  font-size: 1.2em;
+  font-weight: bold;
+}
