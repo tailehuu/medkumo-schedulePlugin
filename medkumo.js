@@ -384,21 +384,19 @@
     }
 
     function validateBookAnAppointment() {
-        var result = true,
-            objValids = valid(),
+        var objValids = valid(),
             form_group;
         Object.keys(objValids).map(function(key, index) {
             form_group = $('#medkumo-sdk-book-an-appointment-form input[name="' + key + '"]').parents('.form-group');
             if (objValids[key]) {
                 form_group.addClass('has-error');
                 form_group.removeClass('has-success');
-                result = false;
             } else {
                 form_group.removeClass('has-error');
             }
             form_group.find('.validate').html(objValids[key]);
         });
-        return result;
+        return objValids.isValid;
     }
 
     function getDoctorAddress() {
