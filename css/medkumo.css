@@ -65,7 +65,7 @@
     z-index: 3;
 }
 
-#radioFemale {
+#radioFemale, #radioMale {
     border: 0;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -74,6 +74,16 @@
     padding: 0;
     position: absolute;
     width: 1px;
+}
+
+#radioMale~label, #radioFemale~label {
+    font-weight: normal;
+}
+
+#radioMale:checked~label, #radioFemale:checked~label,
+#radioFemale:focus~label:before, #radioFemale:focus~label,
+#radioMale:focus~label:before, #radioMale:focus~label {
+    color: #eea236;
 }
 
 #radioFemale~label:before {
@@ -90,21 +100,6 @@
     color: #eea236;
 }
 
-#radioFemale:focus~label:before, #radioFemale:focus~label {
-    color: #eea236;
-}
-
-#radioMale {
-    border: 0;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
-
 #radioMale~label:before {
     font-family: 'icomoon' !important;
     display: inline-block;
@@ -116,15 +111,5 @@
 
 #radioMale:checked~label:before {
     content: "\e922";
-    color: #eea236;
-}
-
-#radioMale:focus~label:before, #radioMale:focus~label {
-    color: #eea236;
-}
-#radioMale~label, #radioFemale~label {
-  font-weight: normal;
-}
-#radioMale:checked~label, #radioFemale:checked~label {
     color: #eea236;
 }
