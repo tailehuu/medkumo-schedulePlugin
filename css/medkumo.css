@@ -1,5 +1,9 @@
-body {
-    margin-bottom: 20px;
+@font-face {
+    font-family: 'icomoon';
+    src: url('fonts/icomoon.eot?82e5l1');
+    src: url('fonts/icomoon.eot?82e5l1#iefix') format('embedded-opentype'), url('fonts/icomoon.ttf?82e5l1') format('truetype'), url('fonts/icomoon.woff?82e5l1') format('woff'), url('fonts/icomoon.svg?82e5l1#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
 .padding-top-15 {
@@ -40,7 +44,72 @@ body {
 #confirmation-msg {
     text-align: center;
 }
-.heading_doctor_name{
-  font-size: 1.2em;
-  font-weight: bold;
+
+.heading_doctor_name {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.validate {
+    float: right;
+    font-size: 12px;
+    font-weight: normal;
+    display: none;
+}
+
+.has-error .validate {
+    display: block;
+}
+
+.input-group .input-group-icon {
+    z-index: 3;
+}
+
+#radioFemale, #radioMale {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+#radioMale~label, #radioFemale~label {
+    font-weight: normal;
+}
+
+#radioMale:checked~label, #radioFemale:checked~label,
+#radioFemale:focus~label:before, #radioFemale:focus~label,
+#radioMale:focus~label:before, #radioMale:focus~label {
+    color: #eea236;
+}
+
+#radioFemale~label:before {
+    font-family: 'icomoon' !important;
+    display: inline-block;
+    content: "\e930";
+    letter-spacing: 5px;
+    font-size: 1.6em;
+    color: #535353;
+}
+
+#radioFemale:checked~label:before {
+    content: "\e921";
+    color: #eea236;
+}
+
+#radioMale~label:before {
+    font-family: 'icomoon' !important;
+    display: inline-block;
+    content: "\e957";
+    letter-spacing: 5px;
+    font-size: 1.6em;
+    color: #535353;
+}
+
+#radioMale:checked~label:before {
+    content: "\e922";
+    color: #eea236;
 }

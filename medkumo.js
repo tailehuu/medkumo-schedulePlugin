@@ -51,36 +51,40 @@
         strForm += '  <div class="col-xs-12 col-sm-12 col-md-12">';
         strForm += '    <div id="medkumo-sdk-book-an-appointment-form" class="form-container">';
         strForm += '      <div class="form-group has-feedback">';
-        strForm += '        <label class="control-label">Name<span class="text-danger">*</span></label>';
+        strForm += '        <label class="control-label">Name<span class="text-danger"> *</span></label>';
+        strForm += '        <label class="control-label validate"></label>';
         strForm += '        <input name="patientName" type="text" class="form-control" id="name" placeholder="First name Last name">';
         strForm += '        <span class="glyphicon glyphicon-user form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
         strForm += '      <div class="form-group  has-feedback">';
         strForm += '        <label class="control-label">Email</label>';
+        strForm += '        <label class="control-label validate"></label>';
         strForm += '        <input name="patientMail" type="email" class="form-control" id="mail" placeholder="youremail@domain.com">';
         strForm += '        <span class="glyphicon glyphicon-envelope form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
         strForm += '      <div class="form-group has-feedback">';
-        strForm += '        <label class="control-label" for="mobile">Mobile Number <span class="text-danger">*</span></label>';
+        strForm += '        <label class="control-label" for="mobile">Mobile Number <span class="text-danger"> *</span></label>';
+        strForm += '        <label class="control-label validate"></label>';
         strForm += '        <div class="input-group">';
         strForm += '          <span class="input-group-addon">+91</span>';
         strForm += '          <input name="patientMobile" type="text" class="form-control" id="mobile" placeholder="1234567890">';
+        strForm += '          <span class="input-group-icon glyphicon glyphicon-earphone form-control-feedback" aria-hidden="true"></span>';
         strForm += '        </div>';
-        strForm += '        <span class="glyphicon glyphicon-earphone form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
         strForm += '      <div class="form-group has-feedback">';
-        strForm += '        <label class="control-label" for="birthDay">Date of Birth<span class="text-danger">*</span></label>';
+        strForm += '        <label class="control-label" for="birthDay">Date of Birth<span class="text-danger"> *</span></label>';
+        strForm += '        <label class="control-label validate"></label>';
         strForm += '        <input name="dob" type="text" class="form-control medkumo_datepicker" id="birthDay" placeholder="dd/mm/YYYY">';
         strForm += '        <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
         strForm += '      <div class="form-group">';
         strForm += '      <div class="row">';
         strForm += '        <div class="col-xs-6">';
-        strForm += '          <label class="control-label" for="appointmentDate">Appointment Date<span class="text-danger">*</span></label>';
+        strForm += '          <label class="control-label" for="appointmentDate">Appointment Date<span class="text-danger"> *</span></label>';
         strForm += '          <input name="appointmentDate" type="text" class="form-control" id="appointmentDate" placeholder="dd/mm/YYYY">';
         strForm += '        </div>';
         strForm += '        <div class="col-xs-6">';
-        strForm += '          <label class="control-label" for="appointmentTime">Appointment Time<span class="text-danger">*</span></label>';
+        strForm += '          <label class="control-label" for="appointmentTime">Appointment Time<span class="text-danger"> *</span></label>';
         strForm += '          <select id="appointmentTime" class="form-control"></select>';
         strForm += '        </div>';
         strForm += '      </div>';
@@ -88,11 +92,11 @@
         strForm += '    <div class="text-center ">';
         strForm += '      <div class="radio-inline ">';
         strForm += '        <input type="radio" name="gender" id="radioMale" value="1" checked>';
-        strForm += '        <label>Male</label>';
+        strForm += '        <label for="radioMale">Male</label>';
         strForm += '      </div>';
         strForm += '      <div class="radio-inline ">';
         strForm += '        <input type="radio" name="gender" id="radioFemale" value="0">';
-        strForm += '        <label>Female</label>';
+        strForm += '        <label for="radioFemale">Female</label>';
         strForm += '      </div>';
         strForm += '    </div>';
         strForm += '    <div class="padding-top-10"><button id="medkumo-sdk-form-row-book-button" class="btn btn-warning center-block ">Book Appointment</button></div>';
@@ -104,7 +108,38 @@
         bookAnAppointmentEvents(renderConfirmationPage);
     }
 
+    function handleInputChange() {
+        var patientName = '#medkumo-sdk-book-an-appointment-form input[name="patientName"]',
+            patientMobile = '#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]',
+            patientMail = '#medkumo-sdk-book-an-appointment-form input[name="patientMail"]',
+            dobValue = '#medkumo-sdk-book-an-appointment-form input[name="dob"]',
+            appointmentDateValue = '#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]',
+            appointmentTime = '#medkumo-sdk-book-an-appointment-form #appointmentTime';
+
+        $(document).on('change',
+            '#medkumo-sdk-book-an-appointment-form input[name="patientName"], #medkumo-sdk-book-an-appointment-form input[name="patientMobile"],#medkumo-sdk-book-an-appointment-form input[name="patientMail"], #medkumo-sdk-book-an-appointment-form input[name="dob"], #medkumo-sdk-book-an-appointment-form input[name="appointmentDate"], #medkumo-sdk-book-an-appointment-form input[name="appointmentTime"]',
+            function() {
+                var objValid = valid(),
+                    form_group = $(this).parents('.form-group');
+                if (objValid[$(this).attr('name')]) {
+                    form_group.addClass('has-error');
+                    form_group.removeClass('has-success');
+                    result = false;
+                } else {
+                    form_group.addClass('has-success');
+                    form_group.removeClass('has-error');
+                }
+                form_group.find('.validate').html(objValid[$(this).attr('name')]);
+            });
+    }
+
     function bookAnAppointmentEvents(callback) {
+        handleInputChange();
+        $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').keypress(function(event) {
+            return isNumber(event);
+        });
+
+        // get avilable timing
         var currentDate = new Date(),
             date,
             dateSelect,
@@ -299,58 +334,69 @@
         return pattern.test(emailAddress);
     };
 
-    function validateBookAnAppointment() {
-        var result = true,
-            patientName = $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').val(),
+    function valid() {
+        var result = {};
+        result.isValid = true;
+        var patientName = $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').val(),
             patientMobile = $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').val(),
             patientMail = $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').val(),
             dobValue = $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').datepicker('getDate'),
             gender = $('#medkumo-sdk-book-an-appointment-form input[name="gender"]').val(),
             appointmentDateValue = $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').datepicker('getDate'),
             appointmentTime = $('#medkumo-sdk-book-an-appointment-form #appointmentTime').val();
+
+        result['patientName'] = '';
         if (patientName == null || patientName == "") {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').parents('.form-group').addClass('has-error');
-            result = false;
-        } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientName"]').parents('.form-group').removeClass('has-error');
+            result['patientName'] = 'This field is required';
+            result.isValid = false;
         }
 
-        if (patientMobile == null || patientMobile == "" || (patientMobile != null && patientMobile.length > 10)) {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').parents('.form-group').addClass('has-error');
-            result = false;
-        } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]').parents('.form-group').removeClass('has-error');
+        result['patientMobile'] = '';
+        if (patientMobile == null || patientMobile == "" || (patientMobile != null && patientMobile.length != 10)) {
+            result['patientMobile'] = 'Mobile number must be exactly 10 digits';
+            result.isValid = false;
         }
 
+        result['patientMail'] = '';
         if (patientMail != "" && !isValidEmailAddress(patientMail)) {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').parents('.form-group').addClass('has-error');
-            result = false;
-        } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="patientMail"]').parents('.form-group').removeClass('has-error');
+            result['patientMail'] = 'Invalid email address';
+            result.isValid = false;
         }
 
+        result['dob'] = '';
         if (dobValue == null || dobValue == "") {
-            $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').parents('.form-group').addClass('has-error');
-            result = false;
-        } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="dob"]').parents('.form-group').removeClass('has-error');
+            result['dob'] = 'This field is required';
+            result.isValid = false;
         }
 
+        result['appointmentTime'] = '';
         if (appointmentTime == null || appointmentTime == "") {
-            $('#medkumo-sdk-book-an-appointment-form #appointmentTime').parents('.form-group').addClass('has-error');
-            result = false;
-        } else {
-            $('#medkumo-sdk-book-an-appointment-form #appointmentTime').parents('.form-group').removeClass('has-error');
+            result['appointmentTime'] = 'This field is required';
+            result.isValid = false;
         }
 
+        result['appointmentDate'] = '';
         if (appointmentDateValue == null || appointmentDateValue == "") {
-            $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').parents('.form-group').addClass('has-error');
-            result = false;
-        } else {
-            $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').parents('.form-group').removeClass('has-error');
+            result['appointmentDate'] = 'This field is required';
+            result.isValid = false;
         }
-
         return result;
+    }
+
+    function validateBookAnAppointment() {
+        var objValids = valid(),
+            form_group;
+        Object.keys(objValids).map(function(key, index) {
+            form_group = $('#medkumo-sdk-book-an-appointment-form input[name="' + key + '"]').parents('.form-group');
+            if (objValids[key]) {
+                form_group.addClass('has-error');
+                form_group.removeClass('has-success');
+            } else {
+                form_group.removeClass('has-error');
+            }
+            form_group.find('.validate').html(objValids[key]);
+        });
+        return objValids.isValid;
     }
 
     function getDoctorAddress() {
@@ -380,15 +426,22 @@
         return resObject;
     }
 
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        return true;
+    }
+
     function loadConfig(hospitalKey, doctorKey) {
-        var sdkBaseUrl = '//scheduleplugin.loc:85/',
-            apiBaseUrl = 'http://54.169.72.195/WebAppAPI/doctorApp.php/api/v1/doctor',
+        var apiBaseUrl = 'http://54.169.72.195/WebAppAPI/doctorApp.php/api/v1/doctor',
             apiCheckHospitalAndDoctorDetails = apiBaseUrl + '/checkHospitalAndDoctorDetails',
             apiBookAnAppointment = apiBaseUrl + '/bookAppointment',
             apiDoctorAvailableTiming = apiBaseUrl + '/doctorAvailableTiming';
 
         Config = {
-            sdkBaseUrl: sdkBaseUrl,
             apiBaseUrl: apiBaseUrl,
             apiCheckHospitalAndDoctorDetails: apiCheckHospitalAndDoctorDetails,
             apiBookAnAppointment: apiBookAnAppointment,
