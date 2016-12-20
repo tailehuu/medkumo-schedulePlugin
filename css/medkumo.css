@@ -245,10 +245,3 @@
 #medkumo-sdk-book-an-appointment-form #appointmentDate {
     background: white!important;
 }
-
-#spinner .modal-content {
-    background: none!important;
-    border: none!important;
-    box-shadow: none!important;
-    -webkit-box-shadow: none!important;
-}
