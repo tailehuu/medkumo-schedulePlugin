@@ -27,7 +27,7 @@
 
     function renderBookAnAppointment() {
         console.log('executing renderBookAnAppointment...');
-
+        initSpinner();
         var strForm = '';
         strForm += '<div class="row">';
         strForm += '  <div class="col-xs-12 col-sm-12 col-md-12 bg-primary">';
@@ -192,6 +192,8 @@
                 "email": patientMail
             };
             console.log('jsonData: ', jsonData);
+
+            spinner.show();
             $.ajax({
                 type: 'POST',
                 url: Config.apiBookAnAppointment,
@@ -200,6 +202,7 @@
                 dataType: 'json',
                 success: function(data) {
                     console.log('success: ', data);
+                    spinner.hide();
                     if (data && data.code === "1") {
                         // callback
                         var fullData = addSomeMissingData(data.appointment_details[0], jsonData);
@@ -207,10 +210,10 @@
                     } else {
                         alert(data.message);
                     }
-
                 },
                 error: function(data) {
                     console.log('error: ', data);
+                    spinner.hide();
                     alert(data, '.medkumo-sdk-message');
                 }
             });
@@ -232,9 +235,8 @@
 
     function renderConfirmationPage(data) {
         var appointment_date = $.format.date(data.appointment_date, 'dd MMM yyyy'),
-            appointment_time = data.appointment_time ? data.appointment_time.substring(0, 5) : '';
-
-        var strForm = '';
+            appointment_time = data.appointment_time ? data.appointment_time.substring(0, 5) : '',
+            strForm = '';
         strForm += '<div class="row">';
         strForm += '    <div class="col-xs-12 col-sm-12 col-md-12 bg-success">';
         strForm += '        <div class="doctor-info">';
@@ -428,6 +430,33 @@
         $('#appointmentTime').html(htmlOptions);
     }
 
+    function initSpinner() {
+        var opts = {
+                lines: 13, // The number of lines to draw
+                length: 28, // The length of each line
+                width: 14, // The line thickness
+                radius: 42, // The radius of the inner circle
+                scale: 1, // Scales overall size of the spinner
+                corners: 1, // Corner roundness (0..1)
+                color: '#000', // #rgb or #rrggbb or array of colors
+                opacity: 0.25, // Opacity of the lines
+                rotate: 0, // The rotation offset
+                direction: 1, // 1: clockwise, -1: counterclockwise
+                speed: 1.5, // Rounds per second
+                trail: 60, // Afterglow percentage
+                fps: 20, // Frames per second when using setTimeout() as a fallback for CSS
+                zIndex: 2e9, // The z-index (defaults to 2000000000)
+                className: 'spinner', // The CSS class to assign to the spinner
+                top: '50%', // Top position relative to parent
+                left: '50%', // Left position relative to parent
+                shadow: false, // Whether to render a shadow
+                hwaccel: false, // Whether to use hardware acceleration
+                position: 'absolute', // Element positioning
+            },
+            target = document.getElementById('spinner_image'),
+            spinner = new Spinner(opts).spin(target);
+    }
+
     var renderMessage = {
         error: function(data, element) {
             if (typeof(element) == 'undefined') {
@@ -446,6 +475,16 @@
             $(element).html(data);
         }
     };
+
+    var spinner = {
+        show: function() {
+          $('#spinner').modal('show');
+        },
+        hide: function() {
+          $('#spinner').modal('hide');
+        }
+    };
+
     // validation functions
     function isValidEmailAddress(emailAddress) {
         var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
@@ -465,44 +504,44 @@
 
         result['patientName'] = '';
         if (patientName == null || patientName == "") {
-            result['patientName'] = 'This field is required';
+            result['patientName'] = Config.message.required;
             result.isValid = false;
         }
 
         result['patientMobile'] = '';
         if (patientMobile == null || patientMobile == "" || (patientMobile != null && patientMobile.length != 10)) {
-            result['patientMobile'] = 'Mobile number must be exactly 10 digits';
+            result['patientMobile'] = Config.message.invalidMobile;
             result.isValid = false;
         }
 
         result['patientMail'] = '';
         if (patientMail != "" && !isValidEmailAddress(patientMail)) {
-            result['patientMail'] = 'Invalid email address';
+            result['patientMail'] = Config.message.invalidEmail;
             result.isValid = false;
         }
 
         result['dob'] = '';
         if (dobValue == null || dobValue == "") {
-            result['dob'] = 'This field is required';
+            result['dob'] = Config.message.required;
             result.isValid = false;
         } else {
             var cd = new Date(),
                 ct = new Date(cd.getFullYear(), cd.getMonth(), cd.getDate()).getTime();
             if (dobValue.getTime() > ct) {
-                result['dob'] = 'The date of birth Invalid';
+                result['dob'] = Config.message.dob;
                 result.isValid = false;
             }
         }
 
         result['appointmentTime'] = '';
         if (appointmentTime == null || appointmentTime == "") {
-            result['appointmentTime'] = 'This field is required';
+            result['appointmentTime'] = Config.message.required;
             result.isValid = false;
         }
 
         result['appointmentDate'] = '';
         if (appointmentDateValue == null || appointmentDateValue == "") {
-            result['appointmentDate'] = 'This field is required';
+            result['appointmentDate'] = Config.message.required;
             result.isValid = false;
         }
         return result;
@@ -573,7 +612,13 @@
             apiDoctorAvailableTiming: apiDoctorAvailableTiming,
             hospitalKey: hospitalKey,
             doctorKey: doctorKey,
-            doctor: {}
+            doctor: {},
+            message: {
+                required: 'This field is required',
+                dob: 'The date of birth Invalid',
+                invalidEmail: 'Invalid email address',
+                invalidMobile: 'Mobile number must be exactly 10 digits'
+            }
         };
     }
 
