@@ -198,6 +198,7 @@
     border-color: #F7A12A;
     border-radius: 20px;
     color: white !important;
+    outline: none!important;
 }
 
 .text-medkumo-footer p {
