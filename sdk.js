@@ -13,7 +13,7 @@
         console.log('executing book...');
         var date = new Date(),
             session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
-        openPopup('book.html?session=' + encodeURIComponent(session) + '&hospitalKey=' + encodeURIComponent(hospitalKey) + '&doctorKey=' + encodeURIComponent(doctorKey), "Book An Appointment", 550, 650);
+        openPopup('book.html?session=' + session + '&hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey, "Book An Appointment", 550, 650);
     };
 
     function openPopup(url, title, w, h) {
