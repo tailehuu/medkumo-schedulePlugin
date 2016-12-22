@@ -269,7 +269,7 @@
         strForm += '                    </a>';
         strForm += '                </div>';
         strForm += '                <div class="media-body">';
-        strForm += '                    <div class="media-heading text-white">Appointment Confirmed !</div>';
+        strForm += '                    <div class="media-heading text-white">' + Config.message.appointmentConfirmed + '</div>';
         strForm += '                    <div class="media-heading text-white">' + appointment_date + ' | ' + appointment_time + ' Hrs</div>';
         strForm += '                </div>';
         strForm += '            </div>';
@@ -514,7 +514,7 @@
 
     var messageModal = {
         show: function(msg) {
-            $('#msgModal .modal-body').html('<p>'+msg+'</p>');
+            $('#msgModal .modal-body').html('<p>' + msg + '</p>');
             centerDiv('#msgModal');
             $('#msgModal').modal('show');
         },
@@ -670,7 +670,8 @@
                 invalidMobile: 'Mobile number must be exactly 10 digits',
                 doctorTimming: "Can't get available timing of the doctor !",
                 apiCheckHospitalAndDoctorDetailsInvalid: "Can't check the hospital key and doctor key. Please check your API",
-                apiBookAnAppointmentInvalid: "Something went wrong. Please try again later"
+                apiBookAnAppointmentInvalid: "Something went wrong. Please try again later",
+                appointmentConfirmed: 'Appointment Confirmed !'
             }
         };
     }
