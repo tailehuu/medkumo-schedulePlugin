@@ -13,7 +13,7 @@
         console.log('executing book...');
         var date = new Date(),
             session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
-        openPopup('booking.html?hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey + '&session=' + session, "Book An Appointment", 500, 650);
+        openPopup('book.html?session=' + session + '&hospitalKey=' + hospitalKey + '&doctorKey=' + doctorKey, "Book An Appointment", 550, 650);
     };
 
     function openPopup(url, title, w, h) {
@@ -26,7 +26,7 @@
 
         var left = ((width / 2) - (w / 2)) + dualScreenLeft;
         var top = ((height / 2) - (h / 2)) + dualScreenTop;
-        var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+        var newWindow = window.open(url, title, 'resizable=no, scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
 
         // Puts focus on the newWindow
         if (window.focus) {

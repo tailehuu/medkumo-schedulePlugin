@@ -1,17 +1,18 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+.container-fluid {
+    padding-bottom: 60px;
+}
+
 @font-face {
     font-family: 'icomoon';
     src: url('fonts/icomoon.eot?82e5l1');
     src: url('fonts/icomoon.eot?82e5l1#iefix') format('embedded-opentype'), url('fonts/icomoon.ttf?82e5l1') format('truetype'), url('fonts/icomoon.woff?82e5l1') format('woff'), url('fonts/icomoon.svg?82e5l1#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
-}
-
-.padding-top-15 {
-    padding-top: 20px;
-}
-
-.padding-top-10 {
-    padding-top: 10px;
 }
 
 .font-size-60 {
@@ -96,8 +97,8 @@
 }
 
 .appointment-info-summary {
-    padding-bottom: 5px;
-    border-color: #F7A12A;
+    padding: 10px 0px 5px 5px;
+    border-bottom: 1px solid #F7A12A;
 }
 
 .appoitment-avatar-success {
@@ -116,16 +117,12 @@
 }
 
 .form-container {
-    padding: 0px 40px;
+    padding: 0px 20px;
 }
 
 .form-container input[type="text"], .form-container input[type="email"], .form-container select {
     border-radius: 12px;
     box-shadow: 0px 0px 1px!important;
-}
-
-.form-container input[type="text"]:focus, .form-container input[type="email"]:focus, .form-container select:focus {
-    border-color: #F7A12A;
 }
 
 .form-container label {
@@ -201,10 +198,12 @@
     outline: none!important;
 }
 
-.text-medkumo-footer p {
+.text-medkumo-footer a {
     margin: 1px 3px;
     color: white;
-    padding: 2px 0px;
+    padding: 5px 0px;
+    text-decoration: none;
+    display: block;
 }
 
 .input-medkumo :focus {
@@ -324,4 +323,76 @@
 .doctor-info .media-heading-doctorname {
     margin-bottom: 5px;
     font-size: 1.2em;
+}
+
+.container-fluid .footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.text-medkumo-header {
+    font-size: 20px;
+}
+
+.confirm-banner {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+.confirm-banner div {
+    font-size: 20px;
+}
+
+.confirm-doctor-summary, .confirm-hospital-summary {
+    padding: 10px 25px;
+}
+
+.modal:before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+}
+
+.has-focus,.has-focus label {
+    color: #F7A12A!important;
+}
+
+.has-focus input[type="text"], .has-focus input[type="email"], .has-focus select, .has-focus span.input-group-addon {
+    border-color: #F7A12A!important;
+}
+
+.footer-app {
+    border-bottom: 1px solid white;
+    padding: 20px 10px;
+    display: none;
+}
+
+.footer-app #footer-app-description {
+    color: white;
+}
+
+.footer-app a {
+    color: #F7A12A;
+    text-decoration: none;
+}
+
+.footer-app #playStoreIcon {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.footer-app #playStoreIcon img {
+    height: 50px;
+}
+
+.media .media-left, .confirm-hospital-summary .media-left,.confirm-doctor-summary .media-left{
+  padding-right: 20px;
+}
+
+#msgModal .modal-content{
+  border-radius: 20px;
 }
