@@ -14,14 +14,46 @@
     padding-top: 10px;
 }
 
+.font-size-60 {
+    font-size: 60px;
+}
+
+.font-size-10 {
+    font-size: 10px;
+}
+
+.padding-top-15 {
+    padding-top: 20px;
+}
+
+.padding-top-10 {
+    padding-top: 10px;
+}
+
+.font-size-75 {
+    font-size: 60px;
+}
+
+.icon-medkumo-header {
+    font-size: 60px;
+    text-decoration: none !important;
+}
+
+.buttom-ok-popup {
+    margin-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 25px;
+    border-radius: 14px;
+}
+
 .doctor-avatar-container {
     position: relative;
-    width: 80px;
-    height: 80px;
     display: block;
     background: white;
     border-radius: 50%;
-    padding: 16px;
+    padding: 7px;
+    text-decoration: none !important;
+    margin-left: 16px;
 }
 
 .doctor-info {
@@ -32,29 +64,123 @@
     padding: 0px 40px;
 }
 
+.form-container input[type="text"] {
+    border-radius: 12px;
+    box-shadow: 0px 0px 1px!important;
+}
+
 .header-container {
     padding-left: 20px;
     padding-right: 20px;
 }
 
-#ui-datepicker-div {
-    z-index: 10!important;
-}
-
-#confirmation-msg {
-    text-align: center;
-}
-
-.heading_doctor_name {
-    font-size: 1.2em;
-    font-weight: bold;
+.header-container i {
+    font-size: 75px;
 }
 
 .validate {
     float: right;
     font-size: 12px;
-    font-weight: normal;
-    display: none;
+}
+
+.border-radius-input {
+    border-radius: 12px !important;
+}
+
+.border-radius-span {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px
+}
+
+.icon-popup {
+    display: block;
+    padding-top: 10px;
+    text-align: center;
+    font-size: 80px;
+    color: red;
+}
+
+.male-checked-active>input:checked {
+    //    visibility: hidden;
+    //    position: absolute;
+}
+
+.male-checked-active input:checked+i {
+    font-size: 80px;
+    color: red;
+    .icon-popup;
+}
+
+.appointment-info-summary {
+    padding-bottom: 5px;
+    border-color: #8a6d3b;
+}
+
+.appoitment-avatar-success {
+    display: block;
+    background: green;
+    border-radius: 50%;
+    color: white;
+    text-decoration: none !important;
+}
+
+.doctor-avatar-summary {
+    text-decoration: none !important;
+}
+
+.doctor-info {
+    padding: 10px 0px;
+}
+
+.form-container {
+    padding: 0px 40px;
+}
+
+.form-container input[type="text"], .form-container input[type="email"], .form-container select {
+    border-radius: 12px;
+    box-shadow: 0px 0px 1px!important;
+}
+
+.input-group span.input-group-addon {
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    box-shadow: 0px 0px 1px!important;
+}
+
+.input-group input {
+    border-top-right-radius: 12px!important;
+    ;
+    border-bottom-right-radius: 12px!important;
+    ;
+}
+
+.header-container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.header-container i {
+    font-size: 75px;
+}
+
+.validate {
+    float: right;
+    font-size: 12px;
+}
+
+.icon-popup {
+    display: block;
+    text-align: center;
+    font-size: 80px;
+    color: red;
+}
+
+.text-white {
+    color: white;
+}
+
+.button-popup-modal {
+    visibility: hidden;
 }
 
 .has-error .validate {
@@ -63,6 +189,10 @@
 
 .input-group .input-group-icon {
     z-index: 3;
+}
+
+#ui-datepicker-div {
+    z-index: 3!important;
 }
 
 #radioFemale, #radioMale {
@@ -80,9 +210,7 @@
     font-weight: normal;
 }
 
-#radioMale:checked~label, #radioFemale:checked~label,
-#radioFemale:focus~label:before, #radioFemale:focus~label,
-#radioMale:focus~label:before, #radioMale:focus~label {
+#radioMale:checked~label, #radioFemale:checked~label, #radioFemale:focus~label:before, #radioFemale:focus~label, #radioMale:focus~label:before, #radioMale:focus~label {
     color: #eea236;
 }
 
@@ -112,4 +240,8 @@
 #radioMale:checked~label:before {
     content: "\e922";
     color: #eea236;
+}
+
+#medkumo-sdk-book-an-appointment-form #appointmentDate {
+    background: white!important;
 }

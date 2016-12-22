@@ -6,31 +6,41 @@
     <title>Book an appoinment form</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/fontstyle.css" rel="stylesheet" />
     <link href="css/medkumo.css" rel="stylesheet" />
 
     <link href="css/jquery-ui.css" rel="stylesheet" />
     <script src="lib/jquery-medkumo.js" type="text/javascript"></script>
     <script src="lib/jquery-ui.js" type="text/javascript"></script>
+    <script src="lib/jquery-dateFormat.js" type="text/javascript"></script>
     <script src="lib/bootstrap.min.js" type="text/javascript"></script>
+    <script src="lib/spin.min.js" type="text/javascript"></script>
     <script src="medkumo.js" type="text/javascript"></script>
 </head>
 
 <body>
-
+    <div id="spinner" class="modal fade" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+        <div id="spinner_image"></div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="row header-container">
-                    <div class="col-xs-4">
-                        <a href="#">
-                            <img src="images\medkumo_bar_logo.png" alt="Cinque Terre" style="">
-                        </a>
-                    </div>
-                    <div class="col-xs-8 text-right">
-                        <h3>
-                         <span class="text-danger">Book </span>
-                         <span class="text-primary"> Appointment </span>
-                       </h3>
+                <div class="doctor-info">
+                    <div class="media">
+                        <div class="media-left media-middle">
+                            <a href="#" class="icon-medkumo-header">
+                                <i class="medkumologo-2part2 ">
+                              <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span>
+                            </i>
+                            </a>
+                        </div>
+                        <div class="media-body text-right">
+                            <h3>
+                            <span class="text-danger">Book </span>
+                            <span class="text-primary"> Appointment </span>
+                        </h3>
+
+                        </div>
                     </div>
                 </div>
             </div>

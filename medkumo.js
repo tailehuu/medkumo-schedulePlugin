@@ -27,7 +27,7 @@
 
     function renderBookAnAppointment() {
         console.log('executing renderBookAnAppointment...');
-
+        initSpinner();
         var strForm = '';
         strForm += '<div class="row">';
         strForm += '  <div class="col-xs-12 col-sm-12 col-md-12 bg-primary">';
@@ -77,18 +77,16 @@
         strForm += '        <input name="dob" type="text" class="form-control medkumo_datepicker" id="birthDay" placeholder="dd/mm/YYYY">';
         strForm += '        <span class="glyphicon glyphicon-calendar form-control-feedback" aria-hidden="true"></span>';
         strForm += '      </div>';
-        strForm += '      <div class="form-group">';
         strForm += '      <div class="row">';
-        strForm += '        <div class="col-xs-6">';
+        strForm += '        <div class="form-group col-xs-6">';
         strForm += '          <label class="control-label" for="appointmentDate">Appointment Date<span class="text-danger"> *</span></label>';
         strForm += '          <input name="appointmentDate" type="text" class="form-control" id="appointmentDate" placeholder="dd/mm/YYYY">';
         strForm += '        </div>';
-        strForm += '        <div class="col-xs-6">';
+        strForm += '        <div class="form-group col-xs-6">';
         strForm += '          <label class="control-label" for="appointmentTime">Appointment Time<span class="text-danger"> *</span></label>';
         strForm += '          <select id="appointmentTime" class="form-control"></select>';
         strForm += '        </div>';
         strForm += '      </div>';
-        strForm += '    </div>';
         strForm += '    <div class="text-center ">';
         strForm += '      <div class="radio-inline ">';
         strForm += '        <input type="radio" name="gender" id="radioMale" value="1" checked>';
@@ -109,13 +107,6 @@
     }
 
     function handleInputChange() {
-        var patientName = '#medkumo-sdk-book-an-appointment-form input[name="patientName"]',
-            patientMobile = '#medkumo-sdk-book-an-appointment-form input[name="patientMobile"]',
-            patientMail = '#medkumo-sdk-book-an-appointment-form input[name="patientMail"]',
-            dobValue = '#medkumo-sdk-book-an-appointment-form input[name="dob"]',
-            appointmentDateValue = '#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]',
-            appointmentTime = '#medkumo-sdk-book-an-appointment-form #appointmentTime';
-
         $(document).on('change',
             '#medkumo-sdk-book-an-appointment-form input[name="patientName"], #medkumo-sdk-book-an-appointment-form input[name="patientMobile"],#medkumo-sdk-book-an-appointment-form input[name="patientMail"], #medkumo-sdk-book-an-appointment-form input[name="dob"], #medkumo-sdk-book-an-appointment-form input[name="appointmentDate"], #medkumo-sdk-book-an-appointment-form input[name="appointmentTime"]',
             function() {
@@ -143,20 +134,23 @@
         var currentDate = new Date(),
             date,
             dateSelect,
-            jsonData;
+            jsonData,
+            age = 0;
         $(".medkumo_datepicker").datepicker({
             dateFormat: 'd/m/yy'
         });
         getAvailableTiming(currentDate.toISOString(), renderOptionTiming);
+
         $('#medkumo-sdk-book-an-appointment-form input[name="appointmentDate"]').datepicker({
             dateFormat: 'd/m/yy',
             minDate: currentDate,
             onSelect: function(data) {
+                $(this).trigger('change');
                 date = $(this).datepicker('getDate');
                 dateSelect = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
                 getAvailableTiming(dateSelect, renderOptionTiming);
             }
-        }).datepicker('setDate', currentDate);
+        }).datepicker('setDate', currentDate).attr('readonly', 'readonly');
 
         // Booking submit event
         $(document).on("click", "#medkumo-sdk-form-row-book-button", function() {
@@ -183,6 +177,7 @@
                 dob = dobValue.getDate() + "/" + (dobValue.getMonth() + 1) + "/" + dobValue.getFullYear();
             }
 
+            age = currentDate.getFullYear() - dobValue.getFullYear();
             jsonData = {
                 "hospital_key": Config.hospitalKey,
                 "doctor_key": Config.doctorKey,
@@ -190,13 +185,15 @@
                 "appointment_time": appointmentTime,
                 "patient_id": "",
                 "name": patientName,
-                "age": 0,
+                "age": age,
                 "gender": gender,
                 "dob": dob,
                 "mobile_number": patientMobile,
                 "email": patientMail
             };
             console.log('jsonData: ', jsonData);
+
+            spinner.show();
             $.ajax({
                 type: 'POST',
                 url: Config.apiBookAnAppointment,
@@ -205,45 +202,168 @@
                 dataType: 'json',
                 success: function(data) {
                     console.log('success: ', data);
+                    spinner.hide();
                     if (data && data.code === "1") {
                         // callback
-                        callback(data);
+                        var fullData = addSomeMissingData(data.appointment_details[0], jsonData);
+                        callback(fullData);
                     } else {
                         alert(data.message);
                     }
-
                 },
                 error: function(data) {
                     console.log('error: ', data);
+                    spinner.hide();
                     alert(data, '.medkumo-sdk-message');
                 }
             });
         });
     }
 
+    function addSomeMissingData(data, jsonData) {
+        if (!data.email) {
+            data.email = jsonData.email;
+        }
+        if (!data.mobile_number) {
+            data.mobile_number = jsonData.mobile_number;
+        }
+        if (!data.dob) {
+            data.dob = jsonData.dob;
+        }
+        return data;
+    }
+
     function renderConfirmationPage(data) {
-        var strForm = '';
+        var appointment_date = $.format.date(data.appointment_date, 'dd MMM yyyy'),
+            appointment_time = data.appointment_time ? data.appointment_time.substring(0, 5) : '',
+            strForm = '';
         strForm += '<div class="row">';
-        strForm += '  <div class="col-xs-12 col-sm-12 col-md-12 bg-primary">';
-        strForm += '    <div class="doctor-info">';
-        strForm += '      <div class="media">';
-        strForm += '        <div class="media-left media-middle">';
-        strForm += '          <a href="#" class="doctor-avatar-container">';
-        strForm += '            <img src="' + Config.doctor.doctor_image + '" class="doctor-avatar" alt="Cinque Terre" width="50">';
-        strForm += '          </a>';
+        strForm += '    <div class="col-xs-12 col-sm-12 col-md-12 bg-success">';
+        strForm += '        <div class="doctor-info">';
+        strForm += '            <div class="media">';
+        strForm += '                <div class="media-left media-middle">';
+        strForm += '                    <a href="#" class="appoitment-avatar-success">';
+        strForm += '                        <i class="medkumocheck-okpart2 font-size-75 "></i>';
+        strForm += '                    </a>';
+        strForm += '                </div>';
+        strForm += '                <div class="media-body">';
+        strForm += '                    <h3 class="media-heading text-info">Appointment Confirm!</h3>';
+        strForm += '                    <h3 class="media-heading text-info">' + appointment_date + ' | ' + appointment_time + ' Hrs</h3>';
+        strForm += '                </div>';
+        strForm += '            </div>';
         strForm += '        </div>';
-        strForm += '        <div class="media-body">';
-        strForm += '          <p class="media-heading"><span class="heading_doctor_name">' + Config.doctor.doctor_name + ',</span> <span>' + Config.doctor.doctor_qualifications + '</span></p>';
-        strForm += '          <p>' + Config.doctor.hospital_name + '</p>';
-        strForm += '          <p>' + getDoctorAddress() + '</p>';
-        strForm += '        </div>';
-        strForm += '      </div>';
         strForm += '    </div>';
-        strForm += '  </div>';
         strForm += '</div>';
-        strForm += '<div id="confirmation-body" class="row padding-top-15">';
-        strForm += '  <div id="confirmation-msg">' + data.data + '</div>';
+        strForm += '<div class="row">';
+        strForm += '    <div class="col-xs-12 col-sm-12 col-md-12">';
+        strForm += '        <div class="modal-header appointment-info-summary">';
+        strForm += '            <h3 class="modal-title">';
+        strForm += '            <span class="text-warning">Appointment Summary </span>';
+        strForm += '          </h3>';
+        strForm += '        </div>';
+        strForm += '    </div>';
         strForm += '</div>';
+        strForm += '<div class="row padding-top-15">';
+        strForm += '    <div class="col-xs-12 col-sm-12 col-md-12">';
+        strForm += '        <div class="col-sm-4">';
+        strForm += '            <div class="form-group">';
+        strForm += '                <p class="text-warning"> Name </p>';
+        strForm += '                <p> ' + data.name + ' </p>';
+        strForm += '            </div>';
+        strForm += '        </div>';
+        strForm += '        <div class="col-sm-4">';
+        strForm += '            <div class="form-group">';
+        strForm += '                <p class="text-warning"> Email </p>';
+        strForm += '                <p> ' + data.email + ' </p>';
+        strForm += '            </div>';
+        strForm += '        </div>';
+        strForm += '        <div class="col-sm-4">';
+        strForm += '            <div class="form-group">';
+        strForm += '                <p class="text-warning"> Mobile </p>';
+        strForm += '                <p> +91' + data.mobile_number + '</p>';
+        strForm += '            </div>';
+        strForm += '        </div>';
+        strForm += '    </div>';
+        strForm += '</div>';
+        strForm += '<div class="row">';
+        strForm += '    <div class="col-xs-12 col-sm-12 col-md-12">';
+        strForm += '        <div class="col-sm-4">';
+        strForm += '            <div class="form-group">';
+        strForm += '                <p class="text-warning"> Date of Birth </p>';
+        strForm += '                <p> ' + data.dob + ' </p>';
+        strForm += '            </div>';
+        strForm += '        </div>';
+        strForm += '        <div class="col-sm-4">';
+        strForm += '            <div class="form-group">';
+        strForm += '                <p class="text-warning"> Appointment Date </p>';
+        strForm += '                <p> ' + appointment_date + ' </p>';
+        strForm += '            </div>';
+        strForm += '        </div>';
+        strForm += '        <div class="col-sm-4">';
+        strForm += '            <div class="form-group">';
+        strForm += '                <p class="text-warning"> Appointment Time </p>';
+        strForm += '                <p> ' + appointment_time + ' Hrs </p>';
+        strForm += '            </div>';
+        strForm += '        </div>';
+        strForm += '    </div>';
+        strForm += '</div>';
+        strForm += '<div class="row">';
+        strForm += '    <div class="col-xs-12 col-sm-12 col-md-12">';
+        strForm += '        <div class="modal-header appointment-info-summary">';
+        strForm += '            <h3 class="modal-title">';
+        strForm += '            <span class="text-warning">Doctor Summary </span>';
+        strForm += '          </h3>';
+        strForm += '        </div>';
+        strForm += '    </div>';
+        strForm += '</div>';
+        strForm += '<div class="row">';
+        strForm += '    <div class="col-xs-12 col-sm-12 col-md-12">';
+        strForm += '        <div class="doctor-info">';
+        strForm += '            <div class="media">';
+        strForm += '                <div class="media-left media-middle">';
+        strForm += '                    <a href="#" class="doctor-avatar-summary">';
+        strForm += '                        <i class="medkumoong-nghepart2 font-size-75">';
+        strForm += '                          <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span strForm +=class="path10"></span>';
+        strForm += '                        </i>';
+        strForm += '                    </a>';
+        strForm += '                </div>';
+        strForm += '                <div class="media-body">';
+        strForm += '                    <h4 class="media-heading">' + data.doctor_name + '</h4>';
+        strForm += '                    <p>' + data.specialization + '</p>';
+        strForm += '                </div>';
+        strForm += '            </div>';
+        strForm += '        </div>';
+        strForm += '    </div>';
+        strForm += '</div>';
+        strForm += '<div class="row ">';
+        strForm += '    <div class="col-xs-12 col-sm-12 col-md-12">';
+        strForm += '        <div class="modal-header appointment-info-summary">';
+        strForm += '            <h3 class="modal-title">';
+        strForm += '            <span class="text-warning">Venu </span>';
+        strForm += '          </h3>';
+        strForm += '        </div>';
+        strForm += '    </div>';
+        strForm += '</div>';
+        strForm += '<div class="row">';
+        strForm += '    <div class="col-xs-12 col-sm-12 col-md-12">';
+        strForm += '        <div class="doctor-info">';
+        strForm += '            <div class="media">';
+        strForm += '                <div class="media-left media-middle">';
+        strForm += '                    <a href="#" class="doctor-avatar-summary">';
+        strForm += '                      <i class="medkumobenh-vienpart2 font-size-75">';
+        strForm += '                        <span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span><span class="path8"></span><span class="path9"></span><span class="path10"></span><span class="path11"></span><span class="path12"></span><span class="path13"></span><span class="path14"></span><span class="path15"></span><span class="path16"></span><span class="path17"></span><span class="path18"></span><span class="path19"></span><span class="path20"></span><span class="path21"></span><span class="path22"></span><span class="path23"></span><span class="path24"></span><span strForm +=class="path25"></span><span class="path26"></span><span class="path27"></span><span class="path28"></span>';
+        strForm += '                      </i>';
+        strForm += '                    </a>';
+        strForm += '                </div>';
+        strForm += '                <div class="media-body">';
+        strForm += '                    <h4 class="media-heading">' + data.hospital_name + '</h4>';
+        strForm += '                    <p>' + getDoctorAddress() + '</p>';
+        strForm += '                </div>';
+        strForm += '            </div>';
+        strForm += '        </div>';
+        strForm += '    </div>';
+        strForm += '</div>';
+
         $(".medkumo-sdk-body").html(strForm);
     }
 
@@ -310,6 +430,33 @@
         $('#appointmentTime').html(htmlOptions);
     }
 
+    function initSpinner() {
+        var opts = {
+                lines: 13, // The number of lines to draw
+                length: 28, // The length of each line
+                width: 14, // The line thickness
+                radius: 42, // The radius of the inner circle
+                scale: 1, // Scales overall size of the spinner
+                corners: 1, // Corner roundness (0..1)
+                color: '#000', // #rgb or #rrggbb or array of colors
+                opacity: 0.25, // Opacity of the lines
+                rotate: 0, // The rotation offset
+                direction: 1, // 1: clockwise, -1: counterclockwise
+                speed: 1.5, // Rounds per second
+                trail: 60, // Afterglow percentage
+                fps: 20, // Frames per second when using setTimeout() as a fallback for CSS
+                zIndex: 2e9, // The z-index (defaults to 2000000000)
+                className: 'spinner', // The CSS class to assign to the spinner
+                top: '50%', // Top position relative to parent
+                left: '50%', // Left position relative to parent
+                shadow: false, // Whether to render a shadow
+                hwaccel: false, // Whether to use hardware acceleration
+                position: 'absolute', // Element positioning
+            },
+            target = document.getElementById('spinner_image'),
+            spinner = new Spinner(opts).spin(target);
+    }
+
     var renderMessage = {
         error: function(data, element) {
             if (typeof(element) == 'undefined') {
@@ -328,6 +475,16 @@
             $(element).html(data);
         }
     };
+
+    var spinner = {
+        show: function() {
+          $('#spinner').modal('show');
+        },
+        hide: function() {
+          $('#spinner').modal('hide');
+        }
+    };
+
     // validation functions
     function isValidEmailAddress(emailAddress) {
         var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
@@ -347,37 +504,44 @@
 
         result['patientName'] = '';
         if (patientName == null || patientName == "") {
-            result['patientName'] = 'This field is required';
+            result['patientName'] = Config.message.required;
             result.isValid = false;
         }
 
         result['patientMobile'] = '';
         if (patientMobile == null || patientMobile == "" || (patientMobile != null && patientMobile.length != 10)) {
-            result['patientMobile'] = 'Mobile number must be exactly 10 digits';
+            result['patientMobile'] = Config.message.invalidMobile;
             result.isValid = false;
         }
 
         result['patientMail'] = '';
         if (patientMail != "" && !isValidEmailAddress(patientMail)) {
-            result['patientMail'] = 'Invalid email address';
+            result['patientMail'] = Config.message.invalidEmail;
             result.isValid = false;
         }
 
         result['dob'] = '';
         if (dobValue == null || dobValue == "") {
-            result['dob'] = 'This field is required';
+            result['dob'] = Config.message.required;
             result.isValid = false;
+        } else {
+            var cd = new Date(),
+                ct = new Date(cd.getFullYear(), cd.getMonth(), cd.getDate()).getTime();
+            if (dobValue.getTime() > ct) {
+                result['dob'] = Config.message.dob;
+                result.isValid = false;
+            }
         }
 
         result['appointmentTime'] = '';
         if (appointmentTime == null || appointmentTime == "") {
-            result['appointmentTime'] = 'This field is required';
+            result['appointmentTime'] = Config.message.required;
             result.isValid = false;
         }
 
         result['appointmentDate'] = '';
         if (appointmentDateValue == null || appointmentDateValue == "") {
-            result['appointmentDate'] = 'This field is required';
+            result['appointmentDate'] = Config.message.required;
             result.isValid = false;
         }
         return result;
@@ -448,7 +612,13 @@
             apiDoctorAvailableTiming: apiDoctorAvailableTiming,
             hospitalKey: hospitalKey,
             doctorKey: doctorKey,
-            doctor: {}
+            doctor: {},
+            message: {
+                required: 'This field is required',
+                dob: 'The date of birth Invalid',
+                invalidEmail: 'Invalid email address',
+                invalidMobile: 'Mobile number must be exactly 10 digits'
+            }
         };
     }
 

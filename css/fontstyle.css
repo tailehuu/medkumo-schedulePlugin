@@ -1,0 +1,591 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?82e5l1');
+  src:  url('fonts/icomoon.eot?82e5l1#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?82e5l1') format('truetype'),
+    url('fonts/icomoon.woff?82e5l1') format('woff'),
+    url('fonts/icomoon.svg?82e5l1#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+i {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.medkumoback_1part2:before {
+  content: "\e900";
+}
+.medkumobackpart2:before {
+  content: "\e901";
+}
+.medkumobenh-vienpart2 .path1:before {
+  content: "\e902";
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path2:before {
+  content: "\e903";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path3:before {
+  content: "\e904";
+  margin-left: -1em;
+  color: rgb(46, 134, 199);
+}
+.medkumobenh-vienpart2 .path4:before {
+  content: "\e905";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+  opacity: 0.1;
+}
+.medkumobenh-vienpart2 .path5:before {
+  content: "\e906";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.medkumobenh-vienpart2 .path6:before {
+  content: "\e907";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+  opacity: 0.2;
+}
+.medkumobenh-vienpart2 .path7:before {
+  content: "\e908";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path8:before {
+  content: "\e909";
+  margin-left: -1em;
+  color: rgb(251, 205, 11);
+}
+.medkumobenh-vienpart2 .path9:before {
+  content: "\e90a";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.medkumobenh-vienpart2 .path10:before {
+  content: "\e90b";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+  opacity: 0.2;
+}
+.medkumobenh-vienpart2 .path11:before {
+  content: "\e90c";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path12:before {
+  content: "\e90d";
+  margin-left: -1em;
+  color: rgb(251, 205, 11);
+}
+.medkumobenh-vienpart2 .path13:before {
+  content: "\e90e";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.medkumobenh-vienpart2 .path14:before {
+  content: "\e90f";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+  opacity: 0.2;
+}
+.medkumobenh-vienpart2 .path15:before {
+  content: "\e910";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path16:before {
+  content: "\e911";
+  margin-left: -1em;
+  color: rgb(251, 205, 11);
+}
+.medkumobenh-vienpart2 .path17:before {
+  content: "\e912";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.medkumobenh-vienpart2 .path18:before {
+  content: "\e913";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path19:before {
+  content: "\e914";
+  margin-left: -1em;
+  color: rgb(251, 205, 11);
+}
+.medkumobenh-vienpart2 .path20:before {
+  content: "\e915";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path21:before {
+  content: "\e916";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.medkumobenh-vienpart2 .path22:before {
+  content: "\e917";
+  margin-left: -1em;
+  color: rgb(46, 134, 199);
+}
+.medkumobenh-vienpart2 .path23:before {
+  content: "\e918";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.medkumobenh-vienpart2 .path24:before {
+  content: "\e919";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+  opacity: 0.2;
+}
+.medkumobenh-vienpart2 .path25:before {
+  content: "\e91a";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path26:before {
+  content: "\e91b";
+  margin-left: -1em;
+  color: rgb(251, 205, 11);
+}
+.medkumobenh-vienpart2 .path27:before {
+  content: "\e91c";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumobenh-vienpart2 .path28:before {
+  content: "\e91d";
+  margin-left: -1em;
+  color: rgb(0, 0, 0);
+  opacity: 0.2;
+}
+.medkumochartpart2:before {
+  content: "\e91e";
+}
+.medkumochat_1part2:before {
+  content: "\e91f";
+}
+.medkumochatpart2:before {
+  content: "\e920";
+}
+.medkumochecked-femalepart2:before {
+  content: "\e921";
+}
+.medkumochecked-malepart2:before {
+  content: "\e922";
+}
+.medkumocheckedpart2 .path1:before {
+  content: "\e923";
+  color: rgb(45, 134, 200);
+}
+.medkumocheckedpart2 .path2:before {
+  content: "\e924";
+  margin-left: -1em;
+  color: rgb(247, 156, 31);
+}
+.medkumocheck-okpart2:before {
+  content: "\e925";
+}
+.medkumocheckpart2:before {
+  content: "\e926";
+}
+.medkumodashboardpart2:before {
+  content: "\e927";
+}
+.medkumodatapart2 .path1:before {
+  content: "\e928";
+  color: rgb(45, 134, 200);
+}
+.medkumodatapart2 .path2:before {
+  content: "\e929";
+  margin-left: -1em;
+  color: rgb(247, 156, 31);
+}
+.medkumodatapart2 .path3:before {
+  content: "\e92a";
+  margin-left: -1em;
+  color: rgb(247, 156, 31);
+}
+.medkumodatapart2 .path4:before {
+  content: "\e92b";
+  margin-left: -1em;
+  color: rgb(247, 156, 31);
+}
+.medkumodaypart2:before {
+  content: "\e92c";
+}
+.medkumodeletedpart2:before {
+  content: "\e92d";
+}
+.medkumodown-iconpart2:before {
+  content: "\e92e";
+}
+.medkumoemailpart2:before {
+  content: "\e92f";
+}
+.medkumofemalepart2:before {
+  content: "\e930";
+}
+.medkumofilepart2 .path1:before {
+  content: "\e931";
+  color: rgb(247, 156, 31);
+}
+.medkumofilepart2 .path2:before {
+  content: "\e932";
+  margin-left: -1em;
+  color: rgb(247, 156, 31);
+}
+.medkumofilepart2 .path3:before {
+  content: "\e933";
+  margin-left: -1em;
+  color: rgb(45, 134, 200);
+}
+.medkumofilepart2 .path4:before {
+  content: "\e934";
+  margin-left: -1em;
+  color: rgb(45, 134, 200);
+}
+.medkumofilepart2 .path5:before {
+  content: "\e935";
+  margin-left: -1em;
+  color: rgb(45, 134, 200);
+}
+.medkumofilepart2 .path6:before {
+  content: "\e936";
+  margin-left: -1em;
+  color: rgb(45, 134, 200);
+}
+.medkumofloderpart2:before {
+  content: "\e937";
+}
+.medkumohappy_userpart2 .path1:before {
+  content: "\e938";
+  color: rgb(45, 134, 200);
+}
+.medkumohappy_userpart2 .path2:before {
+  content: "\e939";
+  margin-left: -1em;
+  color: rgb(45, 134, 200);
+}
+.medkumohappy_userpart2 .path3:before {
+  content: "\e93a";
+  margin-left: -1em;
+  color: rgb(247, 156, 31);
+}
+.medkumohappy_userpart2 .path4:before {
+  content: "\e93b";
+  margin-left: -1em;
+  color: rgb(247, 156, 31);
+}
+.medkumohourpart2 .path1:before {
+  content: "\e93c";
+  color: rgb(45, 134, 200);
+}
+.medkumohourpart2 .path2:before {
+  content: "\e93d";
+  margin-left: -1em;
+  color: rgb(247, 156, 31);
+}
+.medkumolistdatapart2:before {
+  content: "\e93e";
+}
+.medkumolocationpart2:before {
+  content: "\e93f";
+}
+.medkumologo-2part2 .path1:before {
+  content: "\e940";
+  color: rgb(45, 133, 198);
+}
+.medkumologo-2part2 .path2:before {
+  content: "\e941";
+  margin-left: -2em;
+  color: rgb(240, 150, 31);
+}
+.medkumologo-2part2 .path3:before {
+  content: "\e942";
+  margin-left: -2em;
+  color: rgb(250, 205, 10);
+}
+.medkumologo-2part2 .path4:before {
+  content: "\e943";
+  margin-left: -2em;
+  color: rgb(45, 133, 198);
+}
+.medkumologo-2part2 .path5:before {
+  content: "\e944";
+  margin-left: -2em;
+  color: rgb(45, 133, 198);
+}
+.medkumologo-2part2 .path6:before {
+  content: "\e945";
+  margin-left: -2em;
+  color: rgb(45, 133, 198);
+}
+.medkumologo-2part2 .path7:before {
+  content: "\e946";
+  margin-left: -2em;
+  color: rgb(45, 133, 198);
+}
+.medkumologo-2part2 .path8:before {
+  content: "\e947";
+  margin-left: -2em;
+  color: rgb(45, 133, 198);
+}
+.medkumologo-2part2 .path9:before {
+  content: "\e948";
+  margin-left: -2em;
+  color: rgb(45, 133, 198);
+}
+.medkumologo-2part2 .path10:before {
+  content: "\e949";
+  margin-left: -2em;
+  color: rgb(45, 133, 198);
+}
+.medkumologo-2part2 .path11:before {
+  content: "\e94a";
+  margin-left: -2em;
+  color: rgb(45, 133, 198);
+}
+.medkumologopart2 .path1:before {
+  content: "\e94b";
+  color: rgb(45, 133, 198);
+}
+.medkumologopart2 .path2:before {
+  content: "\e94c";
+  margin-left: -2em;
+  color: rgb(240, 150, 31);
+}
+.medkumologopart2 .path3:before {
+  content: "\e94d";
+  margin-left: -2em;
+  color: rgb(250, 205, 10);
+}
+.medkumologopart2 .path4:before {
+  content: "\e94e";
+  margin-left: -2em;
+  color: rgb(255, 255, 255);
+}
+.medkumologopart2 .path5:before {
+  content: "\e94f";
+  margin-left: -2em;
+  color: rgb(255, 255, 255);
+}
+.medkumologopart2 .path6:before {
+  content: "\e950";
+  margin-left: -2em;
+  color: rgb(255, 255, 255);
+}
+.medkumologopart2 .path7:before {
+  content: "\e951";
+  margin-left: -2em;
+  color: rgb(255, 255, 255);
+}
+.medkumologopart2 .path8:before {
+  content: "\e952";
+  margin-left: -2em;
+  color: rgb(255, 255, 255);
+}
+.medkumologopart2 .path9:before {
+  content: "\e953";
+  margin-left: -2em;
+  color: rgb(255, 255, 255);
+}
+.medkumologopart2 .path10:before {
+  content: "\e954";
+  margin-left: -2em;
+  color: rgb(255, 255, 255);
+}
+.medkumologopart2 .path11:before {
+  content: "\e955";
+  margin-left: -2em;
+  color: rgb(255, 255, 255);
+}
+.medkumomailpart2:before {
+  content: "\e956";
+}
+.medkumomalepart2:before {
+  content: "\e957";
+}
+.medkumomoonpart2:before {
+  content: "\e958";
+}
+.medkumoong-nghepart2 .path1:before {
+  content: "\e959";
+  color: rgb(251, 205, 11);
+}
+.medkumoong-nghepart2 .path2:before {
+  content: "\e95a";
+  margin-left: -1em;
+  color: rgb(251, 205, 11);
+}
+.medkumoong-nghepart2 .path3:before {
+  content: "\e95b";
+  margin-left: -1em;
+  color: rgb(251, 205, 11);
+}
+.medkumoong-nghepart2 .path4:before {
+  content: "\e95c";
+  margin-left: -1em;
+  color: rgb(251, 205, 11);
+}
+.medkumoong-nghepart2 .path5:before {
+  content: "\e95d";
+  margin-left: -1em;
+  color: rgb(46, 134, 199);
+}
+.medkumoong-nghepart2 .path6:before {
+  content: "\e95e";
+  margin-left: -1em;
+  color: rgb(46, 134, 199);
+}
+.medkumoong-nghepart2 .path7:before {
+  content: "\e95f";
+  margin-left: -1em;
+  color: rgb(46, 134, 199);
+}
+.medkumoong-nghepart2 .path8:before {
+  content: "\e960";
+  margin-left: -1em;
+  color: rgb(46, 134, 199);
+}
+.medkumoong-nghepart2 .path9:before {
+  content: "\e961";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumoong-nghepart2 .path10:before {
+  content: "\e962";
+  margin-left: -1em;
+  color: rgb(248, 154, 28);
+}
+.medkumoopenlistpart2:before {
+  content: "\e963";
+}
+.medkumopdfpart2 .path1:before {
+  content: "\e964";
+  color: rgb(234, 81, 83);
+}
+.medkumopdfpart2 .path2:before {
+  content: "\e965";
+  margin-left: -1em;
+  color: rgb(228, 42, 43);
+}
+.medkumopdfpart2 .path3:before {
+  content: "\e966";
+  margin-left: -1em;
+  color: rgb(255, 255, 255);
+}
+.medkumopdfpart2 .path4:before {
+  content: "\e967";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumopdfpart2 .path5:before {
+  content: "\e968";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumopdfpart2 .path6:before {
+  content: "\e969";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumopdfpart2 .path7:before {
+  content: "\e96a";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumopdfpart2 .path8:before {
+  content: "\e96b";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumopdfpart2 .path9:before {
+  content: "\e96c";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumopdfpart2 .path10:before {
+  content: "\e96d";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumopdfpart2 .path11:before {
+  content: "\e96e";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumopdfpart2 .path12:before {
+  content: "\e96f";
+  margin-left: -1em;
+  color: rgb(254, 254, 254);
+}
+.medkumophone-callpart2:before {
+  content: "\e970";
+}
+.medkumopillpart2 .path1:before {
+  content: "\e971";
+  color: rgb(247, 156, 31);
+}
+.medkumopillpart2 .path2:before {
+  content: "\e972";
+  margin-left: -1em;
+  color: rgb(45, 134, 200);
+}
+.medkumopillpart2 .path3:before {
+  content: "\e973";
+  margin-left: -1em;
+  color: rgb(221, 129, 3);
+}
+.medkumopillpart2 .path4:before {
+  content: "\e974";
+  margin-left: -1em;
+  color: rgb(2, 128, 162);
+}
+.medkumopoimentpart2:before {
+  content: "\e975";
+}
+.medkumoPXlogopart2:before {
+  content: "\e976";
+}
+.medkumorubypart2:before {
+  content: "\e977";
+}
+.medkumosearchpart2:before {
+  content: "\e978";
+}
+.medkumosettingpart2:before {
+  content: "\e979";
+}
+.medkumoshuterpart2:before {
+  content: "\e97a";
+}
+.medkumostart-checkpart2:before {
+  content: "\e97b";
+}
+.medkumosunsetpart2:before {
+  content: "\e97c";
+}
+.medkumouser-manpart2:before {
+  content: "\e97d";
+}
+.medkumouserpart2:before {
+  content: "\e97e";
+}
+
