@@ -3,7 +3,7 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book an appoinment form</title>
+    <title>Book Appointment</title>
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/fontstyle.css" rel="stylesheet" />
@@ -33,28 +33,34 @@
                             </i>
                         </a>
                     </div>
-                    <div class="media-body text-right">
-                        <h3>
-                            <span class="text-medkumo-summary">Book </span>
-                            <span class="text-medkumo-appointment-header"> Appointment </span>
-                        </h3>
-
+                    <div class="media-body text-right media-middle text-medkumo-header">
+                        <span class="text-medkumo-summary">Book </span>
+                        <span class="text-medkumo-appointment-header"> Appointment </span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="medkumo-sdk-body">
         </div>
-        <div class="row padding-top-15">
+        <div class="row padding-top-15 footer">
+            <div class="col-xs-12 col-sm-12 col-md-12 bg-medkumo-doctor-info footer-app">
+                <div class="col-xs-8 col-md-8" id="footer-app-description">
+                    <p>Manage you appointments, your medical records, your medications and much more</p>
+                    <a target="blank_" href="https://play.google.com/store/apps/details?id=com.medkumo.healthsolutions">Download Medkumo App from PlayStore</a>
+                </div>
+                <div class="col-xs-4 col-md-4" id="playStoreIcon">
+                    <a target="blank_" href="https://play.google.com/store/apps/details?id=com.medkumo.healthsolutions"><img alt="Play Store" src="images/playstore.png" /></a>
+                </div>
+            </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center bg-medkumo-doctor-info text-medkumo-footer">
-                <div class="col-xs-4">
-                    <p>About Mekumo</p>
+                <div class="col-xs-4 col-md-4">
+                    <a href="#">About Mekumo</a>
                 </div>
-                <div class="col-xs-4">
-                    <p>Privacy</p>
+                <div class="col-xs-4 col-md-4">
+                    <a href="#">Privacy</a>
                 </div>
-                <div class="col-xs-4">
-                    <p>Term & Condition</p>
+                <div class="col-xs-4 col-md-4">
+                    <a href="#">Terms & Conditions</a>
                 </div>
             </div>
         </div>
@@ -70,7 +76,7 @@
                     <h3 class="text-medkumo-popup-error"> Error !</h3>
                 </div>
                 <div class="modal-body">
-                    <h4>Sorry. Your time slot is taken. Please choose different time slot and try again</h4>
+
                 </div>
                 <div>
                     <button type="button" class="btn btn-primary  center-block buttom-medkumo-ok-popup" data-dismiss="modal">Ok</button>
