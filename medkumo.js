@@ -5,20 +5,30 @@
 (function(window, undefined) {
     var Config = {};
     init();
-    book();
+    if (checkSession()) {
+        book();
+    }
 
     // functions
-    function init() {
+    function init(callback) {
         var params = getUrlParameters(),
-            date = new Date(),
-            session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear(),
             hospitalKey = params["hospitalKey"],
             doctorKey = params["doctorKey"];
-        if (params['session'] != session) {
-            alert("Timeout expired !");
-            return;
-        }
         loadConfig(hospitalKey, doctorKey);
+    }
+
+    function checkSession() {
+        var params = getUrlParameters(),
+            date = new Date(),
+            session = date.getDate() + "" + date.getMonth() + "" + date.getFullYear();
+        if (params['session'] != session) {
+            setTimeout(function() {
+                renderMessage(true, Config.message.sessionTimeout);
+            }, 500);
+            return false;
+        } else {
+            return true;
+        }
     }
 
     function book() {
@@ -412,7 +422,7 @@
                     Config.doctor = data.data;
                     callback();
                 } else {
-                    renderMessage.error(data.message);
+                    renderMessage(true, data.message);
                 }
             },
             error: function(data) {
@@ -484,24 +494,19 @@
             spinner = new Spinner(opts).spin(target);
     }
 
-    var renderMessage = {
-        error: function(data, element) {
-            if (typeof(element) == 'undefined') {
-                element = '.medkumo-sdk-body';
-            }
+    function renderMessage(isError, message, element) {
+        if (typeof(element) == 'undefined') {
+            element = '.medkumo-sdk-body';
+        }
+        if (isError) {
             $(element).removeClass('alert alert-success');
             $(element).addClass('alert alert-danger');
-            $(element).html(data);
-        },
-        success: function(data, element) {
-            if (typeof(element) == 'undefined') {
-                element = '.medkumo-sdk-body';
-            }
+        } else {
             $(element).removeClass('alert alert-danger');
             $(element).addClass('alert alert-success');
-            $(element).html(data);
         }
-    };
+        $(element).html(message);
+    }
 
     var spinner = {
         show: function() {
@@ -671,7 +676,8 @@
                 doctorTimming: "Can't get available timing of the doctor !",
                 apiCheckHospitalAndDoctorDetailsInvalid: "Can't check the hospital key and doctor key. Please check your API",
                 apiBookAnAppointmentInvalid: "Something went wrong. Please try again later",
-                appointmentConfirmed: 'Appointment Confirmed !'
+                appointmentConfirmed: 'Appointment Confirmed !',
+                sessionTimeout: 'Session timeout'
             }
         };
     }
